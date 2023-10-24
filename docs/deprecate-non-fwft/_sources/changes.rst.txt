@@ -106,6 +106,8 @@ Standard library changes
 * Added: :mod:`amaranth.lib.data`. (`RFC 1`_)
 * Added: :mod:`amaranth.lib.crc`. (`RFC 6`_)
 * Deprecated: :mod:`amaranth.lib.scheduler`. (`RFC 19`_)
+* Deprecated: :class:`amaranth.lib.fifo.FIFOInterface` with ``fwft=False``. (`RFC 20`_)
+* Deprecated: :class:`amaranth.lib.fifo.SyncFIFO` with ``fwft=False``. (`RFC 20`_)
 
 
 Toolchain changes
