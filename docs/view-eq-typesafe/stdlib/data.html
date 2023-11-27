@@ -38,7 +38,7 @@
             Amaranth HDL toolchain
           </a>
               <div class="version">
-                0.4.dev238+g127aba6.editable
+                0.4.dev238+g87024c0.editable
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -635,6 +635,9 @@ the result of calling that method.</p>
 <p>Slicing a view whose layout is an <a class="reference internal" href="#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayLayout</span></code></a> can be done with an index that is
 an Amaranth value instead of a constant integer. The returned element is chosen dynamically
 in that case.</p>
+<p>A view can only be compared for equality with another view of the same layout,
+returning a single-bit value. No other operators are supported on views. If required,
+a view can be converted back to its underlying value via <code class="docutils literal notranslate"><span class="pre">.as_value()</span></code>.</p>
 </section>
 <section id="custom-view-classes">
 <h3>Custom view classes<a class="headerlink" href="#custom-view-classes" title="Permalink to this heading"></a></h3>
