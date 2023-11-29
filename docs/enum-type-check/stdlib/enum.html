@@ -38,7 +38,7 @@
             Amaranth HDL toolchain
           </a>
               <div class="version">
-                0.4.dev251+g7707bda.editable
+                0.4.dev251+gfbbf2e2.editable
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -147,10 +147,7 @@
 </pre></div>
 </div>
 <p>In this way, this module is a drop-in replacement for the standard <a class="reference external" href="https://docs.python.org/3/library/enum.html#module-enum" title="(in Python v3.12)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code></a> module, and in an Amaranth project, all <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">enum</span></code> statements may be replaced with <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">amaranth.lib</span> <span class="pre">import</span> <span class="pre">enum</span></code>.</p>
-<p>Signals with <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a> or <a class="reference internal" href="#amaranth.lib.enum.Flag" title="amaranth.lib.enum.Flag"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></a> based shape are automatically wrapped in the
-<a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> or <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> value-castable wrappers, which ensure type safety.
-Any <a class="reference internal" href="../lang.html#lang-valuecasting"><span class="std std-ref">value-castable</span></a> can also be explicitly wrapped in a view class by
-casting it to the enum type:</p>
+<p>Signals with <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a> or <a class="reference internal" href="#amaranth.lib.enum.Flag" title="amaranth.lib.enum.Flag"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></a> based shape are automatically wrapped in the <a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> or <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> value-castable wrappers, which ensure type safety. Any <a class="reference internal" href="../lang.html#lang-valuecasting"><span class="std std-ref">value-castable</span></a> can also be explicitly wrapped in a view class by casting it to the enum type:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">Funct</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">Op</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -164,8 +161,7 @@ casting it to the enum type:</p>
 <span class="go">&lt;class &#39;amaranth.lib.enum.EnumView&#39;&gt;</span>
 </pre></div>
 </div>
-<p>Like in Python, <a class="reference internal" href="#amaranth.lib.enum.IntEnum" title="amaranth.lib.enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a> and <a class="reference internal" href="#amaranth.lib.enum.IntFlag" title="amaranth.lib.enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></a> are loosely typed and will not be subject to
-wrapping in view classes:</p>
+<p>Like in Python, <a class="reference internal" href="#amaranth.lib.enum.IntEnum" title="amaranth.lib.enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a> and <a class="reference internal" href="#amaranth.lib.enum.IntFlag" title="amaranth.lib.enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></a> are loosely typed and will not be subject to wrapping in view classes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransparentEnum</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">4</span><span class="p">)):</span>
     <span class="n">FOO</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">BAR</span> <span class="o">=</span> <span class="mi">1</span>
@@ -232,18 +228,20 @@ this class <a class="reference internal" href="../lang.html#lang-shapeenum"><spa
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.EnumMeta.__call__">
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.EnumMeta.__call__" title="Permalink to this definition"></a></dt>
-<dd><p>Cast the value to this enum type. When given an integer constant, it returns the
-corresponding enum value, like a standard Python enumeration. When given
-a <a class="reference internal" href="../lang.html#lang-valuecasting"><span class="std std-ref">value-castable</span></a>, it is cast to a value, then wrapped in the
-<code class="docutils literal notranslate"><span class="pre">view_class</span></code> specified for this enum type (<a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> for <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>,
+<dd><p>Cast the value to this enum type.</p>
+<p>When given an integer constant, it returns the corresponding enum value, like a standard
+Python enumeration.</p>
+<p>When given a <a class="reference internal" href="../lang.html#lang-valuecasting"><span class="std std-ref">value-castable</span></a>, it is cast to a value, then wrapped
+in the <code class="docutils literal notranslate"><span class="pre">view_class</span></code> specified for this enum type (<a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> for <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>,
 <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> for <a class="reference internal" href="#amaranth.lib.enum.Flag" title="amaranth.lib.enum.Flag"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></a>, or a custom user-defined class). If the type has no
 <code class="docutils literal notranslate"><span class="pre">view_class</span></code> (like <a class="reference internal" href="#amaranth.lib.enum.IntEnum" title="amaranth.lib.enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a> or <a class="reference internal" href="#amaranth.lib.enum.IntFlag" title="amaranth.lib.enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></a>), a plain
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> or its subclass – As defined by the <code class="docutils literal notranslate"><span class="pre">view_class</span></code> keyword argument.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> – When a view class is not specified for this enum.</p></li>
+<li><p><em>instance of itself</em> – For integer values, or instances of itself.</p></li>
+<li><p><a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> or its subclass – For value-castables, as defined by the <code class="docutils literal notranslate"><span class="pre">view_class</span></code> keyword argument.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> – For value-castables, when a view class is not specified for this enum.</p></li>
 </ul>
 </p>
 </dd>
@@ -289,9 +287,9 @@ its metaclass.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="amaranth.lib.enum.EnumView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">amaranth.lib.enum.</span></span><span class="sig-name descname"><span class="pre">EnumView</span></span><a class="headerlink" href="#amaranth.lib.enum.EnumView" title="Permalink to this definition"></a></dt>
-<dd><p>The view class used for <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>. Wraps a <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> and only
-allows type-safe operations. The only operators allowed are equality comparisons (<code class="docutils literal notranslate"><span class="pre">==</span></code> and
-<code class="docutils literal notranslate"><span class="pre">!=</span></code>) with another <a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> of the same enum type.</p>
+<dd><p>The view class used for <a class="reference internal" href="#amaranth.lib.enum.Enum" title="amaranth.lib.enum.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>.</p>
+<p>Wraps a <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code> and only allows type-safe operations. The only operators allowed are
+equality comparisons (<code class="docutils literal notranslate"><span class="pre">==</span></code> and <code class="docutils literal notranslate"><span class="pre">!=</span></code>) with another <a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> of the same enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.EnumView.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.EnumView.__init__" title="Permalink to this definition"></a></dt>
@@ -328,8 +326,9 @@ allows type-safe operations. The only operators allowed are equality comparisons
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.EnumView.__eq__">
 <span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.EnumView.__eq__" title="Permalink to this definition"></a></dt>
-<dd><p>Compares the underlying value for equality. The other operand has to be either another
-<a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> with the same enum type, or a plain value of the underlying enum.</p>
+<dd><p>Compares the underlying value for equality.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a> with the same enum type, or
+a plain value of the underlying enum.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The result of the equality comparison, as a single-bit value.</p>
@@ -345,15 +344,16 @@ allows type-safe operations. The only operators allowed are equality comparisons
 <dl class="py class">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">amaranth.lib.enum.</span></span><span class="sig-name descname"><span class="pre">FlagView</span></span><a class="headerlink" href="#amaranth.lib.enum.FlagView" title="Permalink to this definition"></a></dt>
-<dd><p>The view class used for <a class="reference internal" href="#amaranth.lib.enum.Flag" title="amaranth.lib.enum.Flag"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></a>. In addition to the operations allowed by
-<a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a>, it allows bitwise operations among values of the same enum type.</p>
+<dd><p>The view class used for <a class="reference internal" href="#amaranth.lib.enum.Flag" title="amaranth.lib.enum.Flag"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flag</span></code></a>.</p>
+<p>In addition to the operations allowed by <a class="reference internal" href="#amaranth.lib.enum.EnumView" title="amaranth.lib.enum.EnumView"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumView</span></code></a>, it allows bitwise operations among
+values of the same enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__invert__">
 <span class="sig-name descname"><span class="pre">__invert__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__invert__" title="Permalink to this definition"></a></dt>
-<dd><p>Inverts all flags in this value and returns another <span class="xref std std-ref">FlagView</span>. Note that this is
-not equivalent to applying bitwise negation to the underlying value: just like the Python
-<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Flag" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Flag</span></code></a> class, only bits corresponding to flags actually defined in the
-enumeration are included in the result.</p>
+<dd><p>Inverts all flags in this value and returns another <span class="xref std std-ref">FlagView</span>.</p>
+<p>Note that this is not equivalent to applying bitwise negation to the underlying value:
+just like the Python <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Flag" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Flag</span></code></a> class, only bits corresponding to flags actually
+defined in the enumeration are included in the result.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -364,9 +364,9 @@ enumeration are included in the result.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__and__">
 <span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__and__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise AND and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise AND and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -377,9 +377,9 @@ underlying enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__or__">
 <span class="sig-name descname"><span class="pre">__or__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__or__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise OR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise OR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -390,9 +390,9 @@ underlying enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__xor__">
 <span class="sig-name descname"><span class="pre">__xor__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__xor__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise XOR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise XOR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -403,9 +403,9 @@ underlying enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__rand__">
 <span class="sig-name descname"><span class="pre">__rand__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__rand__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise AND and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise AND and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -416,9 +416,9 @@ underlying enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__ror__">
 <span class="sig-name descname"><span class="pre">__ror__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__ror__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise OR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise OR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
@@ -429,9 +429,9 @@ underlying enum type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.enum.FlagView.__rxor__">
 <span class="sig-name descname"><span class="pre">__rxor__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.enum.FlagView.__rxor__" title="Permalink to this definition"></a></dt>
-<dd><p>Performs a bitwise XOR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>. The other operand
-has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or a plain value of the
-underlying enum type.</p>
+<dd><p>Performs a bitwise XOR and returns another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a>.</p>
+<p>The other operand has to be either another <a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a> of the same enum type, or
+a plain value of the underlying enum type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.lib.enum.FlagView" title="amaranth.lib.enum.FlagView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlagView</span></code></a></p>
