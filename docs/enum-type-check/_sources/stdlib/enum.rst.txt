@@ -75,7 +75,7 @@ Signals with :class:`Enum` or :class:`Flag` based shape are automatically wrappe
    >>> type(Funct(c))
    <class 'amaranth.lib.enum.EnumView'>
 
-Like in Python, :class:`IntEnum` and :class:`IntFlag` are loosely typed and will not be subject to wrapping in view classes:
+Like the standard Python :class:`enum.IntEnum` and :class:`enum.IntFlag` classes, the Amaranth :class:`IntEnum` and :class:`IntFlag` classes are loosely typed and will not be subject to wrapping in view classes:
 
 .. testcode::
 

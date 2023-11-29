@@ -38,7 +38,7 @@
             Amaranth HDL toolchain
           </a>
               <div class="version">
-                0.4.dev251+gfbbf2e2.editable
+                0.4.dev251+gf49fee2.editable
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -161,7 +161,7 @@
 <span class="go">&lt;class &#39;amaranth.lib.enum.EnumView&#39;&gt;</span>
 </pre></div>
 </div>
-<p>Like in Python, <a class="reference internal" href="#amaranth.lib.enum.IntEnum" title="amaranth.lib.enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a> and <a class="reference internal" href="#amaranth.lib.enum.IntFlag" title="amaranth.lib.enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></a> are loosely typed and will not be subject to wrapping in view classes:</p>
+<p>Like the standard Python <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntFlag" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntFlag</span></code></a> classes, the Amaranth <a class="reference internal" href="#amaranth.lib.enum.IntEnum" title="amaranth.lib.enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a> and <a class="reference internal" href="#amaranth.lib.enum.IntFlag" title="amaranth.lib.enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></a> classes are loosely typed and will not be subject to wrapping in view classes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransparentEnum</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">4</span><span class="p">)):</span>
     <span class="n">FOO</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">BAR</span> <span class="o">=</span> <span class="mi">1</span>
