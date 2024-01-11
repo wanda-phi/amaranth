@@ -39,7 +39,7 @@
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.1.dev26+gc5b43a5
+                0.4.1.dev26+gd1d23d1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -128,7 +128,8 @@
 <h3>Migrating from version 0.4<a class="headerlink" href="#migrating-from-version-0-4" title="Permalink to this heading"></a></h3>
 <p>Apply the following changes to code written against Amaranth 0.4 to migrate it to version 0.5:</p>
 <ul class="simple">
-<li><p>Update uses of <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.log2_int()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.ceil_log2()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.exact_log2()</span></code></p></li>
+<li><p>Update uses of <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.log2_int(need_pow2=False)()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.ceil_log2()</span></code></p></li>
+<li><p>Update uses of <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.log2_int(need_pow2=True)()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">amaranth.utils.exact_log2()</span></code></p></li>
 </ul>
 </section>
 <section id="implemented-rfcs">

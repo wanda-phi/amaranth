@@ -15,7 +15,8 @@ Migrating from version 0.4
 
 Apply the following changes to code written against Amaranth 0.4 to migrate it to version 0.5:
 
-* Update uses of :func:`amaranth.utils.log2_int` to :func:`amaranth.utils.ceil_log2` or :func:`amaranth.utils.exact_log2`
+* Update uses of :func:`amaranth.utils.log2_int(need_pow2=False)` to :func:`amaranth.utils.ceil_log2`
+* Update uses of :func:`amaranth.utils.log2_int(need_pow2=True)` to :func:`amaranth.utils.exact_log2`
 
 
 Implemented RFCs
