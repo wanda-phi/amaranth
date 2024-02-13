@@ -762,19 +762,15 @@ Match operator
 
 The :pc:`val.matches(*patterns)` operator examines a value against a set of patterns. It evaluates to :pc:`Const(1)` if the value *matches* any of the patterns, and to :pc:`Const(0)` otherwise. What it means for a value to match a pattern depends on the type of the pattern.
 
-If the pattern is a :class:`str`, it is treated as a bit mask with "don't care" bits. After removing whitespace, each character of the pattern is compared to the bit of the value in the same position as the character. If the pattern character is ``'0'`` or ``'1'``, the comparison succeeds if the bit equals ``0`` or ``1`` correspondingly. If the pattern character is ``'-'``, the comparison always succeeds. Aside from spaces and tabs, which are ignored, no other characters are accepted.
+If the pattern is a :class:`str`, it is treated as a bit mask with "don't care" bits. After removing whitespace, each character of the pattern is compared to the bit of the value in the same position as the character (counting characters from the right, like in a binary integer literal). If the pattern character is ``'0'`` or ``'1'``, the comparison succeeds if the bit equals ``0`` or ``1`` correspondingly. If the pattern character is ``'-'``, the comparison always succeeds. Aside from spaces and tabs, which are ignored, no other characters are accepted.
 
 Otherwise, the pattern is :ref:`cast to a constant <lang-constcasting>` and compared to :pc:`val` using the :ref:`equality operator <lang-cmpops>`.
 
-For example, given a 8-bit value :pc:`val`, :pc:`val.matches(1, '---- -01-')` is equivalent to :pc:`(val == 1) | ((val & 0b0110_0000) == 0b0100_0000)`. Note that the direction in which bits are specified for the :pc:`.match()` operator (least to most significant) is the opposite of the direction in which an integer literal is written (most to least significant). Bit patterns in this operator are treated similarly to :ref:`bit sequence operators <lang-bitops>`.
+For example, given a 8-bit value :pc:`val`, :pc:`val.matches(1, '---- -01-')` is equivalent to :pc:`(val == 1) | ((val & 0b0000_0110) == 0b0000_0010)`. Bit patterns in this operator are treated similarly to :ref:`bit sequence operators <lang-bitops>`.
 
 The :ref:`Case <lang-switch>` control flow block accepts the same patterns, with the same meaning, as the match operator.
 
 .. TODO: https://github.com/amaranth-lang/amaranth/issues/1003
-
-.. warning::
-
-    Do not rely on the behavior of :pc:`val.matches()` with no patterns.
 
 
 .. _lang-convops:
@@ -885,12 +881,12 @@ Assigning to signals
 Similar to :ref:`how Amaranth operators work <lang-abstractexpr>`, an Amaranth assignment is an ordinary Python object used to describe a part of a circuit. An assignment does not have any effect on the signal it changes until it is added to a control domain in a module. Once added, it introduces logic into the circuit generated from that module.
 
 
-.. _lang-assignlhs:
+.. _lang-assignable:
 
-Assignment targets
-------------------
+Assignable values
+-----------------
 
-The target of an assignment can be more complex than a single signal. It is possible to assign to any combination of signals, :ref:`bit slices <lang-seqops>`, :ref:`concatenations <lang-seqops>`, :ref:`part selects <lang-seqops>`, and :ref:`array proxy objects <lang-array>` as long as it includes no other values:
+An assignment can affect a value that is more complex than just a signal. It is possible to assign to any combination of :ref:`signals <lang-signals>`, :ref:`bit slices <lang-seqops>`, :ref:`concatenations <lang-seqops>`, :ref:`part selects <lang-seqops>`, and :ref:`array proxy objects <lang-array>` as long as it includes no other values:
 
 .. doctest::
 
