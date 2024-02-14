@@ -1,0 +1,12 @@
+Memories
+########
+
+.. py:module:: amaranth.lib.memory
+
+The :mod:`amaranth.lib.memory` module provides random access memory primitives.
+
+.. autoclass:: Memory()
+.. autoclass:: ReadPort()
+.. autoclass:: WritePort()
+
+
