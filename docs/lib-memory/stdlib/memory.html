@@ -39,7 +39,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.1.dev110+g8664285c
+                0.4.1.dev110+g2255cb77
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -228,7 +228,8 @@ it must be equal to its element shape.</p></li>
 <li><p><strong>-------</strong> – </p></li>
 <li><p><strong>addr</strong> (<code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="n">data_width</span><span class="p">)</span></code>) – </p></li>
 <li><p><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">shape</span></code>) – </p></li>
-<li><p><strong>en</strong> (<code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code>) – The enable signal. If <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">==</span> <span class="pre">&quot;comb&quot;</span></code>, this is tied to <code class="docutils literal notranslate"><span class="pre">Const(1)</span></code>.</p></li>
+<li><p><strong>en</strong> (<code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code>) – The enable signal. If <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">==</span> <span class="pre">&quot;comb&quot;</span></code>, this is tied to <code class="docutils literal notranslate"><span class="pre">Const(1)</span></code>.
+Otherwise it is a signal with <code class="docutils literal notranslate"><span class="pre">init=1</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
