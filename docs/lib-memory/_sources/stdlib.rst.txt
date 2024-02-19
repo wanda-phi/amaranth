@@ -18,7 +18,6 @@ The Amaranth standard library is separate from the Amaranth language: everything
    stdlib/data
    stdlib/wiring
    stdlib/cdc
-   stdlib/memory
    stdlib/coding
    stdlib/fifo
    stdlib/crc
