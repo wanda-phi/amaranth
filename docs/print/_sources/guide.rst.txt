@@ -1369,7 +1369,7 @@ In both :class:`Print` and :class:`Format`, arguments that are not Amaranth :ref
 
 .. testcode::
 
-    m.d.sync += Assert((address & 0b111) == 0, message=Format("unaligned address {:08x}!", address))
+    m.d.sync += Assert((addr & 0b111) == 0, message=Format("unaligned address {:08x}!", addr))
 
 
 .. _lang-clockdomains:
