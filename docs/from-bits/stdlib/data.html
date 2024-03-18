@@ -39,7 +39,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev165+gfc1d2c06
+                0.5.0.dev165+gec00bac9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -455,26 +455,26 @@ in which they appear in <code class="docutils literal notranslate"><span class="
 <dt class="sig sig-object py" id="amaranth.lib.data.Layout.from_bits">
 <span class="sig-name descname"><span class="pre">from_bits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.data.Layout.from_bits" title="Permalink to this definition"></a></dt>
 <dd><p>Lift a raw bit-pattern to a higher-level representation.</p>
-<p>This method is called by the Amaranth language to create a high-level representation out
-of a raw integer value. Its main purpose is simulation, where reading out
-a <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueCastable</span></code>: with a custom shape will call this hook to convert the raw value
+<p>This method is called by the Amaranth language to create a high-level representation from
+a raw integer value. Its main purpose is simulation, where retrieving
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueCastable</span></code> with a custom shape will call this hook to convert the raw value
 from the simulator state into the value presented to the user.</p>
 <p>The type returned by this method is not specified. It is recommended, but not required,
 that the returned value is a <a class="reference internal" href="../guide.html#lang-valuelike"><span class="std std-ref">value-like object</span></a>. However, it is
 required that the values returned by this function can be recognized by <a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a>.</p>
-<p>For any integer <code class="code highlight py python docutils literal highlight-python"><span class="n">bits</span></code> that is considered a valid bit pattern for the shape, the
+<p>For any integer <code class="code highlight py python docutils literal highlight-python"><span class="n">raw</span></code> that is considered a valid bit pattern for the shape, the
 following condition must hold:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Const</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">from_bits</span><span class="p">(</span><span class="n">bits</span><span class="p">)))</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">bits</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Const</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">from_bits</span><span class="p">(</span><span class="n">raw</span><span class="p">)))</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">raw</span>
 </pre></div>
 </div>
-<p>The shape can arbitrarily designate some bit patterns as invalid and raise an exception
-when <code class="code highlight py python docutils literal highlight-python"><span class="n">from_bits</span></code> is used on them (for example, bit patterns that do not correspond
-to defined enum values for an enumaration type). It is recommended that <cite>ValueError</cite> is
-raised in this case.</p>
+<p>The shape-castable can arbitrarily designate some bit patterns as invalid and raise
+an exception when <a class="reference internal" href="#amaranth.lib.data.Layout.from_bits" title="amaranth.lib.data.Layout.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a> is used on them (for example, bit patterns that do not
+correspond to defined enum values for an enumeration type). It is recommended that
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised in this case.</p>
 <p>The method differs from <a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a> in that <a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a> is expected to take a high-level
-representation, while <code class="code highlight py python docutils literal highlight-python"><span class="n">from_bits</span></code> is expected to take a low-level one. For example, for
-a fixed-point number shape, <code class="code highlight py python docutils literal highlight-python"><span class="n">const</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code> would interpret its argument as the fixed point
-number <code class="code highlight py python docutils literal highlight-python"><span class="mf">1.0</span></code>, while <code class="code highlight py python docutils literal highlight-python"><span class="n">from_bits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code> would interpret it as a raw bit pattern,
+representation, while <a class="reference internal" href="#amaranth.lib.data.Layout.from_bits" title="amaranth.lib.data.Layout.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a> is expected to take a low-level one. For example,
+for a fixed-point number shape, <code class="code highlight py python docutils literal highlight-python"><span class="n">const</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code> would interpret its argument as the fixed
+point number <code class="code highlight py python docutils literal highlight-python"><span class="mf">1.0</span></code>, while <code class="code highlight py python docutils literal highlight-python"><span class="n">from_bits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code> would interpret it as a raw bit pattern,
 resulting in something like <code class="docutils literal notranslate"><span class="pre">0b0.0001</span></code>.</p>
 <p>This method may also be called by code that is not a part of the Amaranth language.</p>
 <dl class="field-list simple">
@@ -482,7 +482,7 @@ resulting in something like <code class="docutils literal notranslate"><span cla
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>Some unspecified high-level data type representing a literal value of the given shape.</em></p></li>
 <li><p>Using the same return type as <a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a> is recommended if there are no compelling</p></li>
-<li><p><em>arguments otherwise (eg. a desire to reuse a common non-Amaranth Python library type).</em></p></li>
+<li><p><em>arguments otherwise (e.g. a desire to reuse an existing, non-Amaranth type definition).</em></p></li>
 </ul>
 </p>
 </dd>
