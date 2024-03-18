@@ -39,7 +39,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev165+gec00bac9
+                0.5.0.dev165+gf4100fb6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -688,17 +688,17 @@ the result of calling that method.</p>
 <p>Slicing a view whose layout is an <a class="reference internal" href="#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayLayout</span></code></a> can be done with an index that is
 an Amaranth value instead of a constant integer. The returned element is chosen dynamically
 in that case.</p>
-<p>A view can only be compared for equality with another view or const of the same layout,
+<p>A view can only be compared for equality with another view or constant of the same layout,
 returning a single-bit value. No other operators are supported on views. If required,
 a view can be converted back to its underlying value via <a class="reference internal" href="#amaranth.lib.data.View.as_value" title="amaranth.lib.data.View.as_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_value()</span></code></a>.</p>
 </section>
 <section id="custom-view-classes">
 <h3>Custom view classes<a class="headerlink" href="#custom-view-classes" title="Permalink to this heading"></a></h3>
 <p>The <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> class can be inherited from to define additional properties or methods on
-a view. The only two names that are reserved on instances of <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> are <a class="reference internal" href="#amaranth.lib.data.View.as_value" title="amaranth.lib.data.View.as_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_value()</span></code></a>
-and <a class="reference internal" href="#amaranth.lib.data.View.eq" title="amaranth.lib.data.View.eq"><code class="xref py py-meth docutils literal notranslate"><span class="pre">eq()</span></code></a>, leaving the rest to the developer. The <a class="reference internal" href="#amaranth.lib.data.Struct" title="amaranth.lib.data.Struct"><code class="xref py py-class docutils literal notranslate"><span class="pre">Struct</span></code></a> and <a class="reference internal" href="#amaranth.lib.data.Union" title="amaranth.lib.data.Union"><code class="xref py py-class docutils literal notranslate"><span class="pre">Union</span></code></a>
-classes provided in this module are subclasses of <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> that also provide a concise way
-to define a layout.</p>
+a view. The only three names that are reserved on instances of <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> and <a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a>
+are <a class="reference internal" href="#amaranth.lib.data.View.as_value" title="amaranth.lib.data.View.as_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_value()</span></code></a>, <a class="reference internal" href="#amaranth.lib.data.Const.as_bits" title="amaranth.lib.data.Const.as_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Const.as_bits()</span></code></a>, and <a class="reference internal" href="#amaranth.lib.data.View.eq" title="amaranth.lib.data.View.eq"><code class="xref py py-meth docutils literal notranslate"><span class="pre">eq()</span></code></a>, leaving the rest to the developer.
+The <a class="reference internal" href="#amaranth.lib.data.Struct" title="amaranth.lib.data.Struct"><code class="xref py py-class docutils literal notranslate"><span class="pre">Struct</span></code></a> and <a class="reference internal" href="#amaranth.lib.data.Union" title="amaranth.lib.data.Union"><code class="xref py py-class docutils literal notranslate"><span class="pre">Union</span></code></a> classes provided in this module are subclasses of
+<a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> that also provide a concise way to define a layout.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.data.View.shape">
 <span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.data.View.shape" title="Permalink to this definition"></a></dt>
@@ -797,8 +797,8 @@ the same operations, except that it deals with compile-time constants instead of
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code>.</p>
 <section id="creating-a-const">
 <h3>Creating a const<a class="headerlink" href="#creating-a-const" title="Permalink to this heading"></a></h3>
-<p>A constant can be created from a dict or list of field values using <a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Layout.const()</span></code></a>,
-or from a bit-pattern using <a class="reference internal" href="#amaranth.lib.data.Layout.from_bits" title="amaranth.lib.data.Layout.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Layout.from_bits()</span></code></a>.</p>
+<p>A constant can be created from a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of field values using
+<a class="reference internal" href="#amaranth.lib.data.Layout.const" title="amaranth.lib.data.Layout.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Layout.const()</span></code></a>, or from a bit-pattern using <a class="reference internal" href="#amaranth.lib.data.Layout.from_bits" title="amaranth.lib.data.Layout.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Layout.from_bits()</span></code></a>.</p>
 </section>
 <section id="accessing-a-const">
 <h3>Accessing a const<a class="headerlink" href="#accessing-a-const" title="Permalink to this heading"></a></h3>
@@ -806,14 +806,14 @@ or from a bit-pattern using <a class="reference internal" href="#amaranth.lib.da
 corresponding
 to the field with that index or name. If the shape of the field is a <a class="reference internal" href="#amaranth.lib.data.Layout" title="amaranth.lib.data.Layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code></a>,
 the accessed value will be another <a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a>. If it is another <a class="reference internal" href="../guide.html#lang-shapelike"><span class="std std-ref">shape-like</span></a>
-object implementing <code class="docutils literal notranslate"><span class="pre">from_bits</span></code>, it will be the result of calling that method. Otherwise,
-it will be a plain <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
+object implementing <code class="xref py py-meth docutils literal notranslate"><span class="pre">ShapeCastable.from_bits()</span></code>, it will be the result of calling that
+method. Otherwise, it will be a plain <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
 <p>Slicing a view whose layout is an <a class="reference internal" href="#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayLayout</span></code></a> can be done with an index that is
 an Amaranth value instead of a constant integer. The returned element is chosen dynamically
 in that case, and the resulting value will be a <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> instead of <a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a>.</p>
 <p>A const can be compared for equality with another const or view of the same layout.
 When compared with another const, the result will be a Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>.
-When compared with a view, the result will be a single-bit value. No other operators
+When compared with a view, the result will be a single-bit <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code>. No other operators
 are supported on consts. If required, a const can be converted to an Amaranth value using
 <a class="reference internal" href="#amaranth.lib.data.Const.as_value" title="amaranth.lib.data.Const.as_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_value()</span></code></a>, or to its underlying bit-pattern using <a class="reference internal" href="#amaranth.lib.data.Const.as_bits" title="amaranth.lib.data.Const.as_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_bits()</span></code></a>.</p>
 <dl class="py method">
@@ -896,7 +896,8 @@ returned. Otherwise, returns a plain Python <a class="reference external" href="
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AttributeError" title="(in Python v3.12)"><strong>AttributeError</strong></a> – If the layout does not define a field called <code class="docutils literal notranslate"><span class="pre">name</span></code>, or if <code class="docutils literal notranslate"><span class="pre">name</span></code> starts with
     an underscore.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">ShapeCastable.from_bits</span></code> of a field does not recognize the bit pattern as valid.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the <code class="xref py py-meth docutils literal notranslate"><span class="pre">ShapeCastable.from_bits()</span></code> of a field does not recognize the bit pattern
+    as valid (other propagated exceptions are also possible, but not recommended).</p></li>
 </ul>
 </dd>
 </dl>
