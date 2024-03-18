@@ -222,7 +222,7 @@ Language changes
 * Changed: :meth:`Value.cast` casts :class:`ValueCastable` objects recursively.
 * Changed: :meth:`Value.cast` treats instances of classes derived from both :class:`enum.Enum` and :class:`int` (including :class:`enum.IntEnum`) as enumerations rather than integers.
 * Changed: :meth:`Value.matches` with an empty list of patterns returns ``Const(1)`` rather than ``Const(0)``, to match the behavior of ``with m.Case():``.
-* Changed: :class:`Cat` warns if an enumeration without an explicitly specified shape is used. (`RFC 3`_)
+* Changed: :func:`Cat` warns if an enumeration without an explicitly specified shape is used. (`RFC 3`_)
 * Changed: ``signed(0)`` is no longer constructible. (The semantics of this shape were never defined.)
 * Changed: :meth:`Value.__abs__` returns an unsigned value.
 * Deprecated: :class:`ast.Sample`, :class:`ast.Past`, :class:`ast.Stable`, :class:`ast.Rose`, :class:`ast.Fell`. (Predating the RFC process.)

@@ -328,7 +328,7 @@ They may also be provided as a pattern to the :ref:`match operator <lang-matchop
    At the moment, only the following expressions are constant-castable:
 
    * :class:`Const`
-   * :class:`Cat`
+   * :func:`Cat`
    * :class:`Slice`
 
    This list will be expanded in the future.
