@@ -221,7 +221,7 @@ Modeling structured data
 ========================
 
 .. autoclass:: Field
-.. autoclass:: Layout
+.. autoclass:: Layout()
 
 
 Common data layouts
