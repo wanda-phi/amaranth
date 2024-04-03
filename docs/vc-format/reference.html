@@ -41,7 +41,7 @@
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev211+g0c884647
+                0.5.0.dev211+gbce7a5d5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -390,7 +390,11 @@ time.</p>
 shapes. Whenever <code class="code highlight py python docutils literal highlight-python"><span class="s2">&quot;{obj:spec}&quot;</span></code> is encountered by <code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code>, and <code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span></code>
 has a custom shape that has a <a class="reference internal" href="#amaranth.hdl.ShapeCastable.format" title="amaranth.hdl.ShapeCastable.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">format()</span></code></a> method, <code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;spec&quot;</span><span class="p">)</span></code>
 is called, and the format specifier is replaced with the result.</p>
-<p>When not overriden, defers to <a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a> formatting.</p>
+<p>The default <a class="reference internal" href="#amaranth.hdl.ShapeCastable.format" title="amaranth.hdl.ShapeCastable.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">format()</span></code></a> implementation is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">:</span><span class="si">{</span><span class="n">spec</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code></p>
