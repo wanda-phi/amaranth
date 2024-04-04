@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language reference &mdash; Amaranth language &amp; toolchain 0.4.1.dev112 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/platformpicker.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <title>Language reference &mdash; Amaranth language &amp; toolchain 0.5.0.dev218 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87fc4a05" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=51dc03a0"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=8564f806"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="_static/platformpicker.js"></script>
@@ -39,7 +41,7 @@
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.1.dev112+ga0ab64a7
+                0.5.0.dev218+gf5f3d20e
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -151,11 +153,14 @@
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></p></li>
 <li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">C()</span></code></p></li>
 <li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">Mux()</span></code></p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Cat</span></code></p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">Cat()</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClockSignal</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetSignal</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Print</span></code></p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">Assert()</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClockDomain</span></code></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code></p></li>
@@ -324,6 +329,35 @@ the result will usually be an instance of the return type of <a class="reference
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="amaranth.hdl.ShapeCastable.from_bits">
+<span class="sig-name descname"><span class="pre">from_bits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.ShapeCastable.from_bits" title="Permalink to this definition"></a></dt>
+<dd><p>Lift a bit pattern to a higher-level representation.</p>
+<p>This method is called by the Amaranth language to lift <code class="code highlight py python docutils literal highlight-python"><span class="n">raw</span></code>, which is an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>,
+to a higher-level representation, which may be any object accepted by <a class="reference internal" href="#amaranth.hdl.ShapeCastable.const" title="amaranth.hdl.ShapeCastable.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a>.
+Most importantly, the simulator calls this method when the value of a shape-castable
+object is retrieved.</p>
+<p>For any valid bit pattern <code class="code highlight py python docutils literal highlight-python"><span class="n">raw</span></code>, the following condition must hold:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Const</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">from_bits</span><span class="p">(</span><span class="n">raw</span><span class="p">)))</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">raw</span>
+</pre></div>
+</div>
+<p>While <a class="reference internal" href="#amaranth.hdl.ShapeCastable.const" title="amaranth.hdl.ShapeCastable.const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">const()</span></code></a> will usually return an Amaranth value or a custom value-castable
+object that is convenient to use while constructing the design, this method will usually
+return a Python object that is convenient to use while simulating the design. While not
+constrained here, these objects should have the same type whenever feasible.</p>
+<p>This method may also be called by code that is not a part of the Amaranth language.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>unspecified type</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><strong>Exception</strong></a> – When the bit pattern isn’t valid. This exception must be propagated by callers,
+    either directly or as a cause of another exception. While not constrained here,
+    usually the exception class will be <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="amaranth.hdl.ShapeCastable.__call__">
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.ShapeCastable.__call__" title="Permalink to this definition"></a></dt>
 <dd><p>Lift a <a class="reference internal" href="guide.html#lang-valuelike"><span class="std std-ref">value-like object</span></a> to a higher-level representation.</p>
@@ -344,6 +378,26 @@ time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A <a class="reference internal" href="guide.html#lang-valuelike"><span class="std std-ref">value-like object</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="amaranth.hdl.ShapeCastable.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.ShapeCastable.format" title="Permalink to this definition"></a></dt>
+<dd><p>Format a value.</p>
+<p>This method is called by the Amaranth language to implement formatting for custom
+shapes. Whenever <code class="code highlight py python docutils literal highlight-python"><span class="s2">&quot;{obj:spec}&quot;</span></code> is encountered by <code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code>, and <code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span></code>
+has a custom shape that has a <a class="reference internal" href="#amaranth.hdl.ShapeCastable.format" title="amaranth.hdl.ShapeCastable.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">format()</span></code></a> method, <code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;spec&quot;</span><span class="p">)</span></code>
+is called, and the format specifier is replaced with the result.</p>
+<p>The default <a class="reference internal" href="#amaranth.hdl.ShapeCastable.format" title="amaranth.hdl.ShapeCastable.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">format()</span></code></a> implementation is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">:</span><span class="si">{</span><span class="n">spec</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Value</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -399,7 +453,7 @@ domain-specific operations. It is possible to extend Amaranth in third-party cod
 value-castable objects, and the Amaranth standard library provides several built-in ones:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="stdlib/enum.html#module-amaranth.lib.enum" title="amaranth.lib.enum"><code class="xref py py-mod docutils literal notranslate"><span class="pre">amaranth.lib.enum</span></code></a> classes are a drop-in replacement for the standard Python
-<code class="xref py py-class docutils literal notranslate"><span class="pre">enum</span></code> classes that can be defined with an Amaranth shape;</p></li>
+<a class="reference external" href="https://docs.python.org/3/library/enum.html#module-enum" title="(in Python v3.12)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code></a> classes that can be defined with an Amaranth shape;</p></li>
 <li><p><a class="reference internal" href="stdlib/data.html#module-amaranth.lib.data" title="amaranth.lib.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">amaranth.lib.data</span></code></a> classes allow defining complex data structures such as structures
 and unions.</p></li>
 </ul>
@@ -493,7 +547,8 @@ always raises an exception.</p>
 <dt class="sig sig-object py" id="amaranth.hdl.Value.bool">
 <span class="sig-name descname"><span class="pre">bool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.bool" title="Permalink to this definition"></a></dt>
 <dd><p>Conversion to boolean.</p>
-<p>Performs the same operation as <a class="reference internal" href="#amaranth.hdl.Value.any" title="amaranth.hdl.Value.any"><code class="xref py py-meth docutils literal notranslate"><span class="pre">any()</span></code></a>.</p>
+<p>Returns the same value as <a class="reference internal" href="#amaranth.hdl.Value.any" title="amaranth.hdl.Value.any"><code class="xref py py-meth docutils literal notranslate"><span class="pre">any()</span></code></a>, but should be used where <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code> is semantically
+a number.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></p>
@@ -806,6 +861,8 @@ been impossible.</p>
 <dt class="sig sig-object py" id="amaranth.hdl.Value.any">
 <span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.any" title="Permalink to this definition"></a></dt>
 <dd><p>Reduction OR; is any bit <code class="code highlight py python docutils literal highlight-python"><span class="mi">1</span></code>?</p>
+<p>Performs the same operation as <a class="reference internal" href="#amaranth.hdl.Value.bool" title="amaranth.hdl.Value.bool"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bool()</span></code></a>, but should be used where <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code> is
+semantically a bit sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></p>
@@ -930,7 +987,7 @@ been impossible.</p>
 <dt class="sig sig-object py" id="amaranth.hdl.Value.shift_right">
 <span class="sig-name descname"><span class="pre">shift_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.shift_right" title="Permalink to this definition"></a></dt>
 <dd><p>Right shift by constant amount.</p>
-<p>If <code class="code highlight py python docutils literal highlight-python"><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span></code>, performs the same operation as <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="o">.</span><span class="n">left_right</span><span class="p">(</span><span class="o">-</span><span class="n">amount</span><span class="p">)</span></code>.</p>
+<p>If <code class="code highlight py python docutils literal highlight-python"><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span></code>, performs the same operation as <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="o">.</span><span class="n">shift_left</span><span class="p">(</span><span class="o">-</span><span class="n">amount</span><span class="p">)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -946,7 +1003,7 @@ been impossible.</p>
 <dt class="sig sig-object py" id="amaranth.hdl.Value.rotate_right">
 <span class="sig-name descname"><span class="pre">rotate_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.rotate_right" title="Permalink to this definition"></a></dt>
 <dd><p>Right rotate by constant amount.</p>
-<p>If <code class="code highlight py python docutils literal highlight-python"><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span></code>, performs the same operation as <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="o">.</span><span class="n">rotate_right</span><span class="p">(</span><span class="o">-</span><span class="n">amount</span><span class="p">)</span></code>.</p>
+<p>If <code class="code highlight py python docutils literal highlight-python"><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span></code>, performs the same operation as <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="o">.</span><span class="n">rotate_left</span><span class="p">(</span><span class="o">-</span><span class="n">amount</span><span class="p">)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></code>, <a class="reference internal" href="guide.html#lang-assignable"><span class="std std-ref">assignable</span></a></p>
@@ -972,10 +1029,22 @@ been impossible.</p>
 <dt class="sig sig-object py" id="amaranth.hdl.Value.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><p>Bit slicing.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Describe this operation.</p>
-</div>
+<p>Selects a constant-width, constant-offset part of <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code>. All three slicing syntaxes
+(<code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span></code>, and <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">:</span><span class="n">k</span><span class="p">]</span></code>) as well as negative indices are
+supported. Like with other Python containers, out-of-bounds indices are trimmed to
+the bounds of <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code>.</p>
+<p>To select a variable-offset part of <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code>, use <a class="reference internal" href="#amaranth.hdl.Value.bit_select" title="amaranth.hdl.Value.bit_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bit_select()</span></code></a> or
+<a class="reference internal" href="#amaranth.hdl.Value.word_select" title="amaranth.hdl.Value.word_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">word_select()</span></code></a> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code>, <a class="reference internal" href="guide.html#lang-assignable"><span class="std std-ref">assignable</span></a> – If <code class="code highlight py python docutils literal highlight-python"><span class="n">key</span></code> is an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span></code>, <a class="reference internal" href="guide.html#lang-assignable"><span class="std std-ref">assignable</span></a> – If <code class="code highlight py python docutils literal highlight-python"><span class="n">key</span></code> is a slice <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span><span class="p">:</span><span class="n">j</span></code> where <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">j</span></code> are <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s.</p></li>
+<li><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">*</span><span class="nb">slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))))</span></code>, <a class="reference internal" href="guide.html#lang-assignable"><span class="std std-ref">assignable</span></a> – If <code class="code highlight py python docutils literal highlight-python"><span class="n">key</span></code> is a slice <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">:</span><span class="n">k</span></code> where <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">j</span></code>, and <code class="code highlight py python docutils literal highlight-python"><span class="n">k</span></code> are <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1069,14 +1138,15 @@ this operation is equivalent to <code class="code highlight py python docutils l
 <dt class="sig sig-object py" id="amaranth.hdl.Value.matches">
 <span class="sig-name descname"><span class="pre">matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">patterns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.matches" title="Permalink to this definition"></a></dt>
 <dd><p>Pattern matching.</p>
-<p>Matches against a set of patterns, recognizing the same grammar as <code class="code highlight py python docutils literal highlight-python"><span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">Case</span><span class="p">()</span></code>.</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Describe the pattern language in detail.</p>
-</div>
+<p>Matches against a set of patterns, recognizing the same grammar as <code class="code highlight py python docutils literal highlight-python"><span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">Case</span><span class="p">()</span></code>.
+The pattern syntax is described in the <a class="reference internal" href="guide.html#lang-matchop"><span class="std std-ref">language guide</span></a>.</p>
+<p>Each of the <code class="code highlight py python docutils literal highlight-python"><span class="n">patterns</span></code> may be a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> or a <a class="reference internal" href="guide.html#lang-constcasting"><span class="std std-ref">constant-castable object</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#amaranth.hdl.Value" title="amaranth.hdl.Value"><code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code></a>, <code class="code highlight py python docutils literal highlight-python"><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#SyntaxError" title="(in Python v3.12)"><strong>SyntaxError</strong></a> – If a pattern has invalid syntax.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1113,6 +1183,16 @@ from being hashable.</p>
 <span class="k">assert</span> <span class="n">info</span> <span class="o">==</span> <span class="s2">&quot;a signal&quot;</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="amaranth.hdl.Value.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_desc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.Value.__format__" title="Permalink to this definition"></a></dt>
+<dd><p>Forbidden formatting.</p>
+<p>Since normal Python formatting (f-strings and <code class="docutils literal notranslate"><span class="pre">str.format</span></code>) must immediately return
+a string, it is unsuitable for formatting Amaranth values. To format a value at simulation
+time, use <code class="xref py py-class docutils literal notranslate"><span class="pre">Format</span></code> instead. If you really want to dump the AST at elaboration time,
+use <code class="docutils literal notranslate"><span class="pre">repr</span></code> instead (for instance, via <code class="docutils literal notranslate"><span class="pre">f&quot;{value!r}&quot;</span></code>).</p>
 </dd></dl>
 
 </dd></dl>

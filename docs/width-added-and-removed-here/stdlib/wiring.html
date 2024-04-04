@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interfaces and connections &mdash; Amaranth language &amp; toolchain 0.4.1.dev112 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/platformpicker.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <title>Interfaces and connections &mdash; Amaranth language &amp; toolchain 0.5.0.dev218 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=87fc4a05" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=51dc03a0"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=8564f806"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/platformpicker.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Clock domain crossing" href="cdc.html" />
+    <link rel="next" title="Memory arrays" href="memory.html" />
     <link rel="prev" title="Data structures" href="data.html" /> 
 </head>
 
@@ -39,7 +41,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.1.dev112+ga0ab64a7
+                0.5.0.dev218+gf5f3d20e
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -68,6 +70,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#components">Components</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="memory.html">Memory arrays</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cdc.html">Clock domain crossing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding.html">Code conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fifo.html">First-in first-out queues</a></li>
@@ -110,7 +113,7 @@
            <div itemprop="articleBody">
              
   <section id="module-amaranth.lib.wiring">
-<span id="interfaces-and-connections"></span><h1>Interfaces and connections<a class="headerlink" href="#module-amaranth.lib.wiring" title="Permalink to this heading"></a></h1>
+<span id="interfaces-and-connections"></span><span id="wiring"></span><h1>Interfaces and connections<a class="headerlink" href="#module-amaranth.lib.wiring" title="Permalink to this heading"></a></h1>
 <p>The <a class="reference internal" href="#module-amaranth.lib.wiring" title="amaranth.lib.wiring"><code class="xref py py-mod docutils literal notranslate"><span class="pre">amaranth.lib.wiring</span></code></a> module provides a way to declare the interfaces between design components and connect them to each other in a reliable and convenient way.</p>
 <section id="introduction">
 <span id="wiring-introduction"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
@@ -569,7 +572,7 @@ data flow carries data from an <cite>initiator</cite> to a <cite>responder</cite
 describes the initiator <cite>driving</cite> the signal and the responder <cite>sampling</cite> the signal.</p>
 <p>When used as the flow of a signature <a class="reference internal" href="#amaranth.lib.wiring.Member" title="amaranth.lib.wiring.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>, indicates that the data flow of
 the port members of the inner signature <cite>remains the same</cite>.</p>
-<p>When included in the <code class="docutils literal notranslate"><span class="pre">signature</span></code> property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code>, the signature
+<p>When included in the <code class="code highlight py python docutils literal highlight-python"><span class="n">signature</span></code> property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code>, the signature
 describes the elaboratable <cite>driving</cite> the corresponding signal. That is, the elaboratable is
 treated as the <cite>initiator</cite>.</p>
 </dd></dl>
@@ -583,7 +586,7 @@ data flow carries data from an <cite>responder</cite> to a <cite>initiator</cite
 describes the initiator <cite>sampling</cite> the signal and the responder <cite>driving</cite> the signal.</p>
 <p>When used as the flow of a signature <a class="reference internal" href="#amaranth.lib.wiring.Member" title="amaranth.lib.wiring.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>, indicates that the data flow of
 the port members of the inner signature <cite>is flipped</cite>.</p>
-<p>When included in the <code class="docutils literal notranslate"><span class="pre">signature</span></code> property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code>, the signature
+<p>When included in the <code class="code highlight py python docutils literal highlight-python"><span class="n">signature</span></code> property of an <code class="xref py py-class docutils literal notranslate"><span class="pre">Elaboratable</span></code>, the signature
 describes the elaboratable <cite>sampling</cite> the corresponding signal. That is, the elaboratable is
 treated as the <cite>initiator</cite>, the same as in the <a class="reference internal" href="#amaranth.lib.wiring.Out" title="amaranth.lib.wiring.Out"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Out</span></code></a> case.</p>
 </dd></dl>
@@ -644,7 +647,7 @@ object (in which case it is created as a port member). After creation the <a cla
 instance cannot be modified.</p>
 <p>When a <code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code> is created from a description of a port member, the signal’s initial value
 is taken from the member description. If this signal is never explicitly assigned a value, it
-will equal <code class="docutils literal notranslate"><span class="pre">init</span></code>.</p>
+will equal <code class="code highlight py python docutils literal highlight-python"><span class="n">init</span></code>.</p>
 <p>Although instances can be created directly, most often they will be created through
 <a class="reference internal" href="#amaranth.lib.wiring.In" title="amaranth.lib.wiring.In"><code class="xref py py-data docutils literal notranslate"><span class="pre">In</span></code></a> and <a class="reference internal" href="#amaranth.lib.wiring.Out" title="amaranth.lib.wiring.Out"><code class="xref py py-data docutils literal notranslate"><span class="pre">Out</span></code></a>, e.g. <code class="code highlight py python docutils literal highlight-python"><span class="n">In</span><span class="p">(</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="n">Out</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">Signature</span><span class="p">(</span><span class="n">RGBPixel</span><span class="p">))</span></code>.</p>
 <dl class="py method">
@@ -799,9 +802,8 @@ A single dimension describes one-dimensional array, and so on.</p>
 <dt class="sig sig-object py" id="amaranth.lib.wiring.SignatureError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">amaranth.lib.wiring.</span></span><span class="sig-name descname"><span class="pre">SignatureError</span></span><a class="headerlink" href="#amaranth.lib.wiring.SignatureError" title="Permalink to this definition"></a></dt>
 <dd><p>This exception is raised when an invalid operation specific to signature manipulation is
-performed with <a class="reference internal" href="#amaranth.lib.wiring.SignatureMembers" title="amaranth.lib.wiring.SignatureMembers"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignatureMembers</span></code></a>, such as adding a member to a frozen signature.
-Other exceptions, such as <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NameError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NameError</span></code></a>, will still be raised where
-appropriate.</p>
+performed with <a class="reference internal" href="#amaranth.lib.wiring.SignatureMembers" title="amaranth.lib.wiring.SignatureMembers"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignatureMembers</span></code></a>. Other exceptions, such as <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> or
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NameError" title="(in Python v3.12)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NameError</span></code></a>, will still be raised where appropriate.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -811,12 +813,7 @@ appropriate.</p>
 <p>This container, a <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Mapping</span></code></a>, is used to implement the <code class="code highlight py python docutils literal highlight-python"><span class="n">members</span></code>
 attribute of signature objects.</p>
 <p>The keys in this container must be valid Python attribute names that are public (do not begin
-with an underscore. The values must be instances of <a class="reference internal" href="#amaranth.lib.wiring.Member" title="amaranth.lib.wiring.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>. The container is mutable
-in a restricted manner: new keys may be added, but existing keys may not be modified or removed.
-In addition, the container can be <cite>frozen</cite>, which disallows addition of new keys. Freezing
-a container recursively freezes the members of any signatures inside.</p>
-<p>In addition to the use of the superscript operator, multiple members can be added at once with
-the <code class="code highlight py python docutils literal highlight-python"><span class="o">+=</span></code> opreator.</p>
+with an underscore. The values must be instances of <a class="reference internal" href="#amaranth.lib.wiring.Member" title="amaranth.lib.wiring.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>. The container is immutable.</p>
 <p>The <a class="reference internal" href="#amaranth.lib.wiring.SignatureMembers.create" title="amaranth.lib.wiring.SignatureMembers.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create()</span></code></a> method converts this mapping into a mapping of names to signature members
 (signals and interface objects) by creating them from their descriptions. The created mapping
 can be used to populate an interface object.</p>
@@ -1116,7 +1113,7 @@ object for compliance with the signature.</p>
 <p>It verifies that:</p>
 <ul class="simple">
 <li><p><code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span></code> has a <code class="code highlight py python docutils literal highlight-python"><span class="n">signature</span></code> attribute whose value a <a class="reference internal" href="#amaranth.lib.wiring.Signature" title="amaranth.lib.wiring.Signature"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signature</span></code></a> instance
-such that <code class="docutils literal notranslate"><span class="pre">self</span> <span class="pre">==</span> <span class="pre">obj.signature</span></code>;</p></li>
+such that <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span> <span class="o">==</span> <span class="n">obj</span><span class="o">.</span><span class="n">signature</span></code>;</p></li>
 <li><p>for each member, <code class="code highlight py python docutils literal highlight-python"><span class="n">obj</span></code> has an attribute with the same name, whose value:</p>
 <ul>
 <li><p>for members with <a class="reference internal" href="#amaranth.lib.wiring.Member.dimensions" title="amaranth.lib.wiring.Member.dimensions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dimensions</span></code></a> specified, contains a list or
@@ -1257,7 +1254,7 @@ method’s <code class="code highlight py python docutils literal highlight-pyth
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.wiring.FlippedSignature.__setattr__">
 <span class="sig-name descname"><span class="pre">__setattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.wiring.FlippedSignature.__setattr__" title="Permalink to this definition"></a></dt>
-<dd><p>Assigns attribute <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> of the unflipped signature to <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+<dd><p>Assigns attribute <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> of the unflipped signature to <code class="code highlight py python docutils literal highlight-python"><span class="n">value</span></code>.</p>
 <p>Performs <code class="code highlight py python docutils literal highlight-python"><span class="nb">setattr</span><span class="p">(</span><span class="n">unflipped</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>, ensuring that, if <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> refers to
 a property setter, its <code class="code highlight py python docutils literal highlight-python"><span class="bp">self</span></code> argument receives the flipped signature.</p>
 </dd></dl>
@@ -1432,7 +1429,7 @@ the <em>unflipped</em> interface, as usual.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="amaranth.lib.wiring.FlippedInterface.__setattr__">
 <span class="sig-name descname"><span class="pre">__setattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.wiring.FlippedInterface.__setattr__" title="Permalink to this definition"></a></dt>
-<dd><p>Assigns attribute <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> of the unflipped interface to <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+<dd><p>Assigns attribute <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> of the unflipped interface to <code class="code highlight py python docutils literal highlight-python"><span class="n">value</span></code>.</p>
 <p>Performs <code class="code highlight py python docutils literal highlight-python"><span class="nb">setattr</span><span class="p">(</span><span class="n">unflipped</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>, with the following caveats:</p>
 <ol class="arabic simple">
 <li><p>If <code class="code highlight py python docutils literal highlight-python"><span class="n">name</span></code> refers to a signature member, the assigned interface object is flipped.</p></li>
@@ -1490,6 +1487,7 @@ an output.</p></li>
 <li><p>For a given path, if any of the interface objects has an input port member corresponding
 to a constant value, then the rest of the interface objects must have output port members
 corresponding to the same constant value.</p></li>
+<li><p>When connecting multiple interface objects, at least one connection must be made.</p></li>
 </ul>
 <p>For example, if <code class="code highlight py python docutils literal highlight-python"><span class="n">obj1</span></code> is being connected to <code class="code highlight py python docutils literal highlight-python"><span class="n">obj2</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">obj3</span></code>, and <code class="code highlight py python docutils literal highlight-python"><span class="n">obj1</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">b</span></code>
 is an output, then <code class="code highlight py python docutils literal highlight-python"><span class="n">obj2</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">b</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">obj2</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">b</span></code> must exist and be inputs. If <code class="code highlight py python docutils literal highlight-python"><span class="n">obj2</span><span class="o">.</span><span class="n">c</span></code>
@@ -1588,7 +1586,7 @@ can be used to customize a component’s signature.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="data.html" class="btn btn-neutral float-left" title="Data structures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="cdc.html" class="btn btn-neutral float-right" title="Clock domain crossing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="memory.html" class="btn btn-neutral float-right" title="Memory arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
