@@ -181,8 +181,6 @@ Simulation
 Memory description
 ==================
 
-.. autoexception:: amaranth.hdl.FrozenMemory
-
 .. autoclass:: amaranth.hdl.MemoryData
 
 

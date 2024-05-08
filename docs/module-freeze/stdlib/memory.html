@@ -198,12 +198,6 @@
 </section>
 <section id="memory-description">
 <h2>Memory description<a class="headerlink" href="#memory-description" title="Permalink to this heading"></a></h2>
-<dl class="py exception">
-<dt class="sig sig-object py" id="amaranth.hdl.FrozenMemory">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">amaranth.hdl.</span></span><span class="sig-name descname"><span class="pre">FrozenMemory</span></span><a class="headerlink" href="#amaranth.hdl.FrozenMemory" title="Permalink to this definition"></a></dt>
-<dd><p>Exception raised when a memory array is being modified after elaboration.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="amaranth.hdl.MemoryData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">amaranth.hdl.</span></span><span class="sig-name descname"><span class="pre">MemoryData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_loc_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.hdl.MemoryData" title="Permalink to this definition"></a></dt>
@@ -215,7 +209,7 @@ similar to an array of <code class="xref py py-class docutils literal notranslat
 <a class="reference internal" href="#amaranth.hdl.MemoryData.Init" title="amaranth.hdl.MemoryData.Init"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryData.Init</span></code></a> converting elements of the iterable to match <code class="code highlight py python docutils literal highlight-python"><span class="n">shape</span></code> and using
 a default value for rows that are not explicitly initialized.</p>
 <p>Changing the initial contents of a <a class="reference internal" href="#amaranth.hdl.MemoryData" title="amaranth.hdl.MemoryData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryData</span></code></a> is only possible until it is used to
-elaborate a memory; afterwards, attempting to do so will raise <a class="reference internal" href="#amaranth.hdl.FrozenMemory" title="amaranth.hdl.FrozenMemory"><code class="xref py py-exc docutils literal notranslate"><span class="pre">FrozenMemory</span></code></a>.</p>
+elaborate a memory; afterwards, attempting to do so will raise <code class="xref py py-exc docutils literal notranslate"><span class="pre">AlreadyElaborated</span></code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Uninitialized memories (including ASIC memories and some FPGA memories) are
@@ -290,7 +284,7 @@ directly instead) and then adding memory ports using the <a class="reference int
 <a class="reference internal" href="#amaranth.lib.memory.Memory.write_port" title="amaranth.lib.memory.Memory.write_port"><code class="xref py py-meth docutils literal notranslate"><span class="pre">write_port()</span></code></a> methods. Because it is mutable, it should be created and used locally within
 the <a class="reference internal" href="../guide.html#lang-elaboration"><span class="std std-ref">elaborate</span></a> method.</p>
 <p>Adding ports or changing initial contents of a <a class="reference internal" href="#amaranth.lib.memory.Memory" title="amaranth.lib.memory.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a> is only possible until it is
-elaborated; afterwards, attempting to do so will raise <a class="reference internal" href="#amaranth.hdl.FrozenMemory" title="amaranth.hdl.FrozenMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenMemory</span></code></a>.</p>
+elaborated; afterwards, attempting to do so will raise <code class="xref py py-class docutils literal notranslate"><span class="pre">AlreadyElaborated</span></code>.</p>
 <p class="rubric">Platform overrides</p>
 <p>Define the <code class="code highlight py python docutils literal highlight-python"><span class="n">get_memory</span><span class="p">()</span></code> platform method to override the implementation of
 <a class="reference internal" href="#amaranth.lib.memory.Memory" title="amaranth.lib.memory.Memory"><code class="xref py py-class docutils literal notranslate"><span class="pre">Memory</span></code></a>, e.g. to instantiate library cells directly.</p>
