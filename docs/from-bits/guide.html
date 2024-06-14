@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language guide &mdash; Amaranth language &amp; toolchain 0.5.0.dev167 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/platformpicker.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <title>Language guide &mdash; Amaranth language &amp; toolchain 0.6.0.dev7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/platformpicker.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d131d90a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=1a1fb2b2"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=65a8317a"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="_static/platformpicker.js"></script>
@@ -39,7 +41,7 @@
               <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev167+g6d15d558
+                0.6.0.dev7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -114,7 +116,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#fsm-state-control-blocks"><code class="code highlight py python docutils literal highlight-python"><span class="n">FSM</span></code>/<code class="code highlight py python docutils literal highlight-python"><span class="n">State</span></code> control blocks</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#combinatorial-evaluation">Combinatorial evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#combinational-evaluation">Combinational evaluation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#synchronous-evaluation">Synchronous evaluation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#assertions">Assertions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#debug-printing">Debug printing</a></li>
@@ -140,6 +142,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reference.html">Language reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stdlib.html">Standard library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Simulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="platform.html">Platform integration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changes.html">Changelog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contrib.html">Contributing</a></li>
@@ -403,7 +406,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 </section>
 <section id="signals">
 <span id="lang-signals"></span><h2>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h2>
-<p>A <em>signal</em> is a value representing a (potentially) varying number. Signals can be <a class="reference external" href="#lang-assigns"><em>assigned</em></a> in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial</span></a> or <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.</p>
+<p>A <em>signal</em> is a value representing a (potentially) varying number. Signals can be <a class="reference external" href="#lang-assigns"><em>assigned</em></a> in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational</span></a> or <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domain, in which case they are generated as wires or registers, respectively. Signals always have a well-defined value; they cannot be uninitialized or undefined.</p>
 <section id="signal-shapes">
 <h3>Signal shapes<a class="headerlink" href="#signal-shapes" title="Permalink to this heading"></a></h3>
 <p>A signal can be created with an explicitly specified shape (any <a class="reference internal" href="#lang-shapelike"><span class="std std-ref">shape-like</span></a> object); if omitted, the shape defaults to <a class="reference internal" href="reference.html#amaranth.hdl.unsigned" title="amaranth.hdl.unsigned"><code class="xref py py-func docutils literal notranslate"><span class="pre">unsigned(1)</span></code></a>. Although rarely useful, 0-bit signals are permitted.</p>
@@ -442,7 +445,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 <section id="initial-signal-values">
 <span id="lang-initial"></span><h3>Initial signal values<a class="headerlink" href="#initial-signal-values" title="Permalink to this heading"></a></h3>
 <p>Each signal has an <em>initial value</em>, specified with the <code class="docutils literal notranslate"><span class="pre">init=</span></code> parameter. If the initial value is not specified explicitly, zero is used by default. An initial value can be specified with an integer or an enumeration member.</p>
-<p>Signals <a class="reference internal" href="#lang-assigns"><span class="std std-ref">assigned</span></a> in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial</span></a> domain assume their initial value when none of the assignments are <a class="reference internal" href="#lang-active"><span class="std std-ref">active</span></a>. Signals assigned in a <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domain assume their initial value after <em>power-on reset</em> and, unless the signal is <a class="reference internal" href="#lang-resetless"><span class="std std-ref">reset-less</span></a>, <em>explicit reset</em>. Signals that are used but never assigned are equivalent to constants of their initial value.</p>
+<p>Signals <a class="reference internal" href="#lang-assigns"><span class="std std-ref">assigned</span></a> in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational</span></a> domain assume their initial value when none of the assignments are <a class="reference internal" href="#lang-active"><span class="std std-ref">active</span></a>. Signals assigned in a <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domain assume their initial value after <em>power-on reset</em> and, unless the signal is <a class="reference internal" href="#lang-resetless"><span class="std std-ref">reset-less</span></a>, <em>explicit reset</em>. Signals that are used but never assigned are equivalent to constants of their initial value.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">init</span>
 <span class="go">0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">init</span>
@@ -455,7 +458,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 <section id="reset-less-signals">
 <span id="lang-resetless"></span><h3>Reset-less signals<a class="headerlink" href="#reset-less-signals" title="Permalink to this heading"></a></h3>
 <p>Signals assigned in a <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domain can be <em>resettable</em> or <em>reset-less</em>, specified with the <code class="docutils literal notranslate"><span class="pre">reset_less=</span></code> parameter. If the parameter is not specified, signals are resettable by default. Resettable signals assume their <a class="reference internal" href="#lang-initial"><span class="std std-ref">initial value</span></a> on explicit reset, which can be asserted via the <a class="reference internal" href="#lang-clockdomains"><span class="std std-ref">clock domain</span></a> or by <a class="reference internal" href="#lang-controlinserter"><span class="std std-ref">modifying control flow</span></a> with <code class="xref py py-class docutils literal notranslate"><span class="pre">ResetInserter</span></code>. Reset-less signals are not affected by explicit reset.</p>
-<p>Signals assigned in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial</span></a> domain are not affected by the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter.</p>
+<p>Signals assigned in a <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational</span></a> domain are not affected by the <code class="docutils literal notranslate"><span class="pre">reset_less</span></code> parameter.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">()</span><span class="o">.</span><span class="n">reset_less</span>
 <span class="go">False</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">reset_less</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_less</span>
@@ -607,47 +610,43 @@ This happens because, being empty, it does not contain any negative values.</p>
 <td><p>bitwise XOR</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.implies(b)</span></code></p></td>
-<td><p>bitwise <a class="reference external" href="https://en.wikipedia.org/wiki/IMPLY_gate">IMPLY</a></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;&gt;</span> <span class="pre">b</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&gt;&gt;</span> <span class="pre">b</span></code></p></td>
 <td><p>arithmetic right shift by variable amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, <a class="footnote-reference brackets" href="#opb2" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;&lt;</span> <span class="pre">b</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;&lt;</span> <span class="pre">b</span></code></p></td>
 <td><p>left shift by variable amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb2" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_left(i)</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_left(i)</span></code></p></td>
 <td><p>left rotate by constant amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb3" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_right(i)</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.rotate_right(i)</span></code></p></td>
 <td><p>right rotate by constant amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb3" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_left(i)</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_left(i)</span></code></p></td>
 <td><p>left shift by constant amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb3" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_right(i)</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.shift_right(i)</span></code></p></td>
 <td><p>right shift by constant amount</p></td>
 <td><p><a class="footnote-reference brackets" href="#opb3" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="opb1" role="note">
+<aside class="footnote brackets" id="opb1" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Logical and arithmetic right shift of an unsigned value are equivalent. Logical right shift of a signed value can be expressed by <a class="reference internal" href="#lang-convops"><span class="std std-ref">converting it to unsigned</span></a> first.</p>
 </aside>
-<aside class="footnote brackets" id="opb2" role="note">
+<aside class="footnote brackets" id="opb2" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id3">2</a>)</span>
 <p>Shift amount must be unsigned; integer shifts in Python require the amount to be positive.</p>
 </aside>
-<aside class="footnote brackets" id="opb3" role="note">
+<aside class="footnote brackets" id="opb3" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id4">1</a>,<a role="doc-backlink" href="#id5">2</a>,<a role="doc-backlink" href="#id6">3</a>,<a role="doc-backlink" href="#id7">4</a>)</span>
 <p>Shift and rotate amounts can be negative, in which case the direction is reversed.</p>
@@ -682,7 +681,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.any()</span></code></p></td>
 <td><p>reduction OR; is any bit set?</p></td>
-<td><p><a class="footnote-reference brackets" href="#opr1" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#opr1" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#opr3" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a.xor()</span></code></p></td>
 <td><p>reduction XOR; is an odd number of bits set?</p></td>
@@ -690,19 +689,24 @@ This happens because, being empty, it does not contain any negative values.</p>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a.bool()</span></code></p></td>
 <td><p>conversion to boolean; is non-zero?</p></td>
-<td><p><a class="footnote-reference brackets" href="#opr2" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#opr2" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#opr3" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="opr1" role="note">
+<aside class="footnote brackets" id="opr1" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id8">1</a>,<a role="doc-backlink" href="#id9">2</a>)</span>
 <p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#all" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">all()</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">any()</span></code></a> function to the value viewed as a collection of bits.</p>
 </aside>
-<aside class="footnote brackets" id="opr2" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">5</a><span class="fn-bracket">]</span></span>
-<p>Conceptually the same as applying the Python <code class="xref py py-func docutils literal notranslate"><span class="pre">bool()</span></code> function to the value viewed as an integer.</p>
+<aside class="footnote brackets" id="opr2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">5</a><span class="fn-bracket">]</span></span>
+<p>Conceptually the same as applying the Python <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a> function to the value viewed as an integer.</p>
+</aside>
+<aside class="footnote brackets" id="opr3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id10">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
+<p>While the <a class="reference internal" href="reference.html#amaranth.hdl.Value.any" title="amaranth.hdl.Value.any"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Value.any()</span></code></a> and <a class="reference internal" href="reference.html#amaranth.hdl.Value.bool" title="amaranth.hdl.Value.bool"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Value.bool()</span></code></a>  operators return the same value, the use of <code class="docutils literal notranslate"><span class="pre">a.any()</span></code> implies that <code class="docutils literal notranslate"><span class="pre">a</span></code> is semantically a bit sequence, and the use of <code class="docutils literal notranslate"><span class="pre">a.bool()</span></code> implies that <code class="docutils literal notranslate"><span class="pre">a</span></code> is semantically a number.</p>
 </aside>
 </aside>
 </section>
@@ -797,11 +801,11 @@ This happens because, being empty, it does not contain any negative values.</p>
 <tbody>
 <tr class="row-even"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></p></td>
 <td><p>bit length; value width</p></td>
-<td><p><a class="footnote-reference brackets" href="#ops1" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#ops1" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">:</span><span class="n">k</span><span class="p">]</span></code></p></td>
 <td><p>bit slicing by constant subscripts</p></td>
-<td><p><a class="footnote-reference brackets" href="#ops2" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#ops2" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="nb">iter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></p></td>
 <td><p>bit iteration</p></td>
@@ -817,7 +821,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 </tr>
 <tr class="row-odd"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="n">Cat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code></p></td>
 <td><p>concatenation</p></td>
-<td><p><a class="footnote-reference brackets" href="#ops3" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#ops3" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="o">.</span><span class="n">replicate</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></code></p></td>
 <td><p>replication</p></td>
@@ -826,16 +830,16 @@ This happens because, being empty, it does not contain any negative values.</p>
 </tbody>
 </table>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="ops1" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">6</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="ops1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">7</a><span class="fn-bracket">]</span></span>
 <p>Words “length” and “width” have the same meaning when talking about Amaranth values. Conventionally, “width” is used.</p>
 </aside>
-<aside class="footnote brackets" id="ops2" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">7</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="ops2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">8</a><span class="fn-bracket">]</span></span>
 <p>All variations of the Python slice notation are supported, including “extended slicing”. E.g. all of <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span></code> select bits in the same way as other Python sequence types select their elements.</p>
 </aside>
-<aside class="footnote brackets" id="ops3" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">8</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="ops3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">9</a><span class="fn-bracket">]</span></span>
 <p>In the concatenated value, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span></code> occupies the least significant bits, and <code class="code highlight py python docutils literal highlight-python"><span class="n">b</span></code> the most significant bits. Any number of arguments (zero, one, two, or more) are supported.</p>
 </aside>
 </aside>
@@ -914,9 +918,9 @@ This happens because, being empty, it does not contain any negative values.</p>
 <p class="admonition-title">Note</p>
 <p>An array becomes immutable after it is indexed for the first time. The elements of the array do not themselves become immutable, but it is not recommended to mutate them as the behavior can become unpredictable.</p>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Each time an array proxy object with <code class="docutils literal notranslate"><span class="pre">n</span></code> elements is used in an expression, it generates a multiplexer with <code class="docutils literal notranslate"><span class="pre">n</span></code> branches. However, using <code class="docutils literal notranslate"><span class="pre">k</span></code> of such array proxy objects in an expression generates a multiplexer with <code class="docutils literal notranslate"><span class="pre">n**k</span></code> branches. This can generate extremely large circuits that may quickly exhaust the resources of the synthesis target or even the available RAM.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Arrays, <code class="xref py py-class docutils literal notranslate"><span class="pre">amaranth.hdl.Array</span></code>, are distinct from and serve a different function than <a class="reference internal" href="stdlib/data.html#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">amaranth.lib.data.ArrayLayout</span></code></a>.</p>
 </div>
 </section>
 <section id="data-structures">
@@ -934,9 +938,9 @@ This happens because, being empty, it does not contain any negative values.</p>
 <section id="control-domains">
 <span id="lang-domains"></span><h2>Control domains<a class="headerlink" href="#control-domains" title="Permalink to this heading"></a></h2>
 <p>A <em>control domain</em> is a named group of <a class="reference internal" href="#lang-signals"><span class="std std-ref">signals</span></a> that change their value in identical conditions.</p>
-<p>All designs have a single predefined <em>combinatorial domain</em>, containing all signals that change immediately when any value used to compute them changes. The name <code class="docutils literal notranslate"><span class="pre">comb</span></code> is reserved for the combinatorial domain, and refers to the same domain in all modules.</p>
+<p>All designs have a single predefined <em>combinational domain</em>, containing all signals that change immediately when any value used to compute them changes. The name <code class="docutils literal notranslate"><span class="pre">comb</span></code> is reserved for the combinational domain, and refers to the same domain in all modules.</p>
 <p>A design can also have any amount of user-defined <em>synchronous domains</em>, also called <a class="reference internal" href="#lang-clockdomains"><span class="std std-ref">clock domains</span></a>, containing signals that change when a specific edge occurs on the domain’s clock signal or, for domains with asynchronous reset, on the domain’s reset signal. Most modules only use a single synchronous domain, conventionally called <code class="docutils literal notranslate"><span class="pre">sync</span></code>, but the name <code class="docutils literal notranslate"><span class="pre">sync</span></code> does not have to be used, and lacks any special meaning beyond being the default.</p>
-<p>The behavior of assignments differs for signals in <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial</span></a> and <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domains. Collectively, signals in synchronous domains contain the state of a design, whereas signals in the combinatorial domain cannot form feedback loops or hold state.</p>
+<p>The behavior of assignments differs for signals in <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational</span></a> and <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a> domains. Collectively, signals in synchronous domains contain the state of a design, whereas signals in the combinational domain cannot form feedback loops or hold state.</p>
 <section id="assigning-to-signals">
 <span id="lang-assigns"></span><h3>Assigning to signals<a class="headerlink" href="#assigning-to-signals" title="Permalink to this heading"></a></h3>
 <p><em>Assignments</em> are used to change the values of signals. An assignment statement can be introduced with the <code class="docutils literal notranslate"><span class="pre">.eq(...)</span></code> syntax:</p>
@@ -1030,7 +1034,7 @@ This happens because, being empty, it does not contain any negative values.</p>
 <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="n">b</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">Cat</span><span class="p">(</span><span class="n">C</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">C</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">C</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p>Multiple assignments to the same signal bits are more useful when combined with control structures, which can make some of the assignments <a class="reference internal" href="#lang-active"><span class="std std-ref">active or inactive</span></a>. If all assignments to some signal bits are <a class="reference internal" href="#lang-active"><span class="std std-ref">inactive</span></a>, their final values are determined by the signal’s domain, <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial</span></a> or <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a>.</p>
+<p>Multiple assignments to the same signal bits are more useful when combined with control structures, which can make some of the assignments <a class="reference internal" href="#lang-active"><span class="std std-ref">active or inactive</span></a>. If all assignments to some signal bits are <a class="reference internal" href="#lang-active"><span class="std std-ref">inactive</span></a>, their final values are determined by the signal’s domain, <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational</span></a> or <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous</span></a>.</p>
 </section>
 </section>
 <section id="control-flow">
@@ -1198,9 +1202,9 @@ inside `Else`
 </div>
 </section>
 </section>
-<section id="combinatorial-evaluation">
-<span id="lang-comb"></span><h2>Combinatorial evaluation<a class="headerlink" href="#combinatorial-evaluation" title="Permalink to this heading"></a></h2>
-<p>Signals in the combinatorial <a class="reference internal" href="#lang-domains"><span class="std std-ref">control domain</span></a> change whenever any value used to compute them changes. The final value of a combinatorial signal is equal to its <a class="reference internal" href="#lang-initial"><span class="std std-ref">initial value</span></a> updated by the <a class="reference internal" href="#lang-active"><span class="std std-ref">active assignments</span></a> in the <a class="reference internal" href="#lang-assignorder"><span class="std std-ref">assignment order</span></a>. Combinatorial signals cannot hold any state.</p>
+<section id="combinational-evaluation">
+<span id="lang-comb"></span><h2>Combinational evaluation<a class="headerlink" href="#combinational-evaluation" title="Permalink to this heading"></a></h2>
+<p>Signals in the combinational <a class="reference internal" href="#lang-domains"><span class="std std-ref">control domain</span></a> change whenever any value used to compute them changes. The final value of a combinational signal is equal to its <a class="reference internal" href="#lang-initial"><span class="std std-ref">initial value</span></a> updated by the <a class="reference internal" href="#lang-active"><span class="std std-ref">active assignments</span></a> in the <a class="reference internal" href="#lang-assignorder"><span class="std std-ref">assignment order</span></a>. Combinational signals cannot hold any state.</p>
 <p>Consider the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">m</span><span class="o">.</span><span class="n">If</span><span class="p">(</span><span class="n">en</span><span class="p">):</span>
@@ -1208,15 +1212,10 @@ inside `Else`
 </pre></div>
 </div>
 <p>Whenever the signals <code class="docutils literal notranslate"><span class="pre">en</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span></code> change, the signal <code class="docutils literal notranslate"><span class="pre">a</span></code> changes as well. If <code class="docutils literal notranslate"><span class="pre">en</span></code> is false, the final value of <code class="docutils literal notranslate"><span class="pre">a</span></code> is its initial value, <code class="docutils literal notranslate"><span class="pre">1</span></code>. If <code class="docutils literal notranslate"><span class="pre">en</span></code> is true, the final value of <code class="docutils literal notranslate"><span class="pre">a</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p>
-<p>A combinatorial signal that is computed directly or indirectly based on its own value is a part of a <em>combinatorial feedback loop</em>, sometimes shortened to just <em>feedback loop</em>. Combinatorial feedback loops can be stable (e.g. implement a constant driver or a transparent latch), or unstable (e.g. implement a ring oscillator). Amaranth prohibits using assignments to describe any kind of a combinatorial feedback loop, including transparent latches.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The current version of Amaranth does not detect combinatorial feedback loops, but processes the design under the assumption that there aren’t any. If the design does in fact contain a combinatorial feedback loop, it will likely be <strong>silently miscompiled</strong>, though some cases will be detected during synthesis or place &amp; route.</p>
-<p>This hazard will be eliminated in the future.</p>
-</div>
+<p>A combinational signal that is computed directly or indirectly based on its own value is a part of a <em>combinational feedback loop</em>, sometimes shortened to just <em>feedback loop</em>. Combinational feedback loops can be stable (e.g. implement a constant driver or a transparent latch), or unstable (e.g. implement a ring oscillator). Amaranth prohibits using assignments to describe any kind of a combinational feedback loop, including transparent latches.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In the exceedingly rare case when a combinatorial feedback loop is desirable, it is possible to implement it by directly instantiating technology primitives (e.g. device-specific LUTs or latches). This is also the only way to introduce a combinatorial feedback loop with well-defined behavior in simulation and synthesis, regardless of the HDL being used.</p>
+<p>In the exceedingly rare case when a combinational feedback loop is desirable, it is possible to implement it by directly instantiating technology primitives (e.g. device-specific LUTs or latches). This is also the only way to introduce a combinational feedback loop with well-defined behavior in simulation and synthesis, regardless of the HDL being used.</p>
 </div>
 </section>
 <section id="synchronous-evaluation">
@@ -1247,8 +1246,8 @@ inside `Else`
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>While is is also possible to add assertions to the <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial domain</span></a>, simulations of combinatorial circuits may have <em>glitches</em>: instantaneous, transient changes in the values of expressions that are being computed which do not affect the result of the computation (and are not visible in most waveform viewers for that reason). Depending on the tools used for simulation, a glitch in the condition of an assertion or of a <a class="reference internal" href="#lang-control"><span class="std std-ref">control block</span></a> that contains it may cause the simulation to be terminated, even if the glitch would have been instantaneously resolved afterwards.</p>
-<p>If the condition of an assertion is assigned in a synchronous domain, then it is safe to add that assertion in the combinatorial domain. For example, neither of the assertions in the example below will be violated due to glitches, regardless of which domain the <code class="code highlight py python docutils literal highlight-python"><span class="n">ip</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">booting</span></code> signals are driven by:</p>
+<p>While is is also possible to add assertions to the <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational domain</span></a>, simulations of combinational circuits may have <em>glitches</em>: instantaneous, transient changes in the values of expressions that are being computed which do not affect the result of the computation (and are not visible in most waveform viewers for that reason). Depending on the tools used for simulation, a glitch in the condition of an assertion or of a <a class="reference internal" href="#lang-control"><span class="std std-ref">control block</span></a> that contains it may cause the simulation to be terminated, even if the glitch would have been instantaneously resolved afterwards.</p>
+<p>If the condition of an assertion is assigned in a synchronous domain, then it is safe to add that assertion in the combinational domain. For example, neither of the assertions in the example below will be violated due to glitches, regardless of which domain the <code class="code highlight py python docutils literal highlight-python"><span class="n">ip</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">booting</span></code> signals are driven by:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ip_sync</span> <span class="o">=</span> <span class="n">Signal</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">sync</span> <span class="o">+=</span> <span class="n">ip_sync</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
 
@@ -1257,12 +1256,12 @@ inside `Else`
     <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="n">Assert</span><span class="p">(</span><span class="n">ip_sync</span> <span class="o">&lt;</span> <span class="mi">128</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Assertions should be added in a <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous domain</span></a> when possible. In cases where it is not, such as if the condition is a signal that is assigned in a synchronous domain elsewhere, care should be taken while adding the assertion to the combinatorial domain.</p>
+<p>Assertions should be added in a <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous domain</span></a> when possible. In cases where it is not, such as if the condition is a signal that is assigned in a synchronous domain elsewhere, care should be taken while adding the assertion to the combinational domain.</p>
 </div>
 </section>
 <section id="debug-printing">
 <span id="lang-print"></span><h2>Debug printing<a class="headerlink" href="#debug-printing" title="Permalink to this heading"></a></h2>
-<p>The value of any expression, or of several of them, can be printed to the terminal during simulation using the <code class="xref py py-class docutils literal notranslate"><span class="pre">Print</span></code> statement. When added to the <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial domain</span></a>, the value of an expression is printed whenever it changes:</p>
+<p>The value of any expression, or of several of them, can be printed to the terminal during simulation using the <code class="xref py py-class docutils literal notranslate"><span class="pre">Print</span></code> statement. When added to the <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational domain</span></a>, the value of an expression is printed whenever it changes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
 <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="n">Print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </pre></div>
@@ -1374,8 +1373,8 @@ inside `Else`
 <p>Instances of <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> also implement the <code class="xref py py-meth docutils literal notranslate"><span class="pre">elaborate()</span></code> method, which returns a special object that represents a fragment of a netlist. Such an object cannot be constructed without using <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>.</p>
 </div>
 <p>The <code class="code highlight py python docutils literal highlight-python"><span class="n">platform</span></code> argument received by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">elaborate()</span></code> method can be <code class="code highlight py python docutils literal highlight-python"><span class="kc">None</span></code>, an instance of <a class="reference internal" href="platform.html#platform"><span class="std std-ref">a built-in platform</span></a>, or a custom object. It is used for <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> and to contain the state of a design while it is being elaborated.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">elaborate()</span></code> method should not modify the <code class="docutils literal notranslate"><span class="pre">self</span></code> object it receives other than for debugging and experimentation. Elaborating the same design twice with two identical platform objects should produce two identical netlists. If the design needs to be modified after construction, this should happen before elaboration.</p>
 <p>It is not possible to ensure that a design which modifies itself during elaboration is correctly converted to a netlist because the relative order in which the <code class="xref py py-meth docutils literal notranslate"><span class="pre">elaborate()</span></code> methods are called within a single design is not guaranteed.</p>
 </div>
@@ -1404,7 +1403,7 @@ inside `Else`
 </section>
 <section id="modifying-control-flow">
 <span id="lang-controlinserter"></span><h3>Modifying control flow<a class="headerlink" href="#modifying-control-flow" title="Permalink to this heading"></a></h3>
-<p>Control flow within an elaboratable can be altered without introducing a new clock domain by using <em>control flow modifiers</em> that affect <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous evaluation</span></a> of signals in a specified domain (or domains). They never affect <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinatorial evaluation</span></a>. There are two control flow modifiers:</p>
+<p>Control flow within an elaboratable can be altered without introducing a new clock domain by using <em>control flow modifiers</em> that affect <a class="reference internal" href="#lang-sync"><span class="std std-ref">synchronous evaluation</span></a> of signals in a specified domain (or domains). They never affect <a class="reference internal" href="#lang-comb"><span class="std std-ref">combinational evaluation</span></a>. There are two control flow modifiers:</p>
 <ul class="simple">
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResetInserter</span></code> introduces a synchronous reset input (or inputs), updating all of the signals in the specified domains to their <a class="reference internal" href="#lang-initial"><span class="std std-ref">initial value</span></a> whenever the active edge occurs on the clock of the domain <em>if</em> the synchronous reset input is asserted.</p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EnableInserter</span></code> introduces a synchronous enable input (or inputs), preventing any of the signals in the specified domains from changing value whenever the active edge occurs on the clock of the domain <em>unless</em> the synchronous enable input is asserted.</p></li>
@@ -1478,9 +1477,9 @@ inside `Else`
 <span class="n">m</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">comb</span> <span class="o">+=</span> <span class="n">zero</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>A combinatorial signal can change synchronously to a clock domain, as in the example above, in which case it may only be sampled from the same clock domain unless explicitly synchronized. Renaming a clock domain must be assumed to potentially affect any output of an elaboratable.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A combinational signal can change synchronously to a clock domain, as in the example above, in which case it may only be sampled from the same clock domain unless explicitly synchronized. Renaming a clock domain must be assumed to potentially affect any output of an elaboratable.</p>
 </div>
 </section>
 </section>
@@ -1490,11 +1489,11 @@ inside `Else`
 </section>
 <section id="i-o-values">
 <span id="lang-iovalues"></span><h2>I/O values<a class="headerlink" href="#i-o-values" title="Permalink to this heading"></a></h2>
-<p>To interoperate with external circuitry, Amaranth provides <em>I/O values</em>, which represent bundles of wires carrying uninterpreted signals. Unlike regular <a class="reference internal" href="#lang-values"><span class="std std-ref">values</span></a>, which represent binary numbers and can be <a class="reference internal" href="#lang-assigns"><span class="std std-ref">assigned</span></a> to create a unidirectional connection or used in computations, I/O values represent electrical signals that may be digital or analog and have no <a class="reference internal" href="#lang-shapes"><span class="std std-ref">shape</span></a>, cannot be assigned, used in computations, or simulated.</p>
-<p>I/O values are only used to define connections between non-Amaranth building blocks that traverse an Amaranth design, including <a class="reference internal" href="#lang-instance"><span class="std std-ref">instances</span></a> and <a class="reference internal" href="#lang-iobufferinstance"><span class="std std-ref">I/O buffer instances</span></a>.</p>
+<p>To interoperate with external circuitry, Amaranth provides <em>core I/O values</em>, which represent bundles of wires carrying uninterpreted signals. Unlike regular <a class="reference internal" href="#lang-values"><span class="std std-ref">values</span></a>, which represent binary numbers and can be <a class="reference internal" href="#lang-assigns"><span class="std std-ref">assigned</span></a> to create a unidirectional connection or used in computations, core I/O values represent electrical signals that may be digital or analog and have no <a class="reference internal" href="#lang-shapes"><span class="std std-ref">shape</span></a>, cannot be assigned, used in computations, or simulated.</p>
+<p>Core I/O values are only used to define connections between non-Amaranth building blocks that traverse an Amaranth design, including <a class="reference internal" href="#lang-instance"><span class="std std-ref">instances</span></a> and <a class="reference internal" href="#lang-iobufferinstance"><span class="std std-ref">I/O buffer instances</span></a>.</p>
 <section id="i-o-ports">
 <span id="lang-ioports"></span><h3>I/O ports<a class="headerlink" href="#i-o-ports" title="Permalink to this heading"></a></h3>
-<p>An <em>I/O port</em> is an I/O value representing a connection to a port of the topmost module in the <a class="reference internal" href="#lang-submodules"><span class="std std-ref">design hierarchy</span></a>. It can be created with an explicitly specified width.</p>
+<p>A <em>core I/O port</em> is a core I/O value representing a connection to a port of the topmost module in the <a class="reference internal" href="#lang-submodules"><span class="std std-ref">design hierarchy</span></a>. It can be created with an explicitly specified width.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amaranth.hdl</span> <span class="kn">import</span> <span class="n">IOPort</span>
 </pre></div>
 </div>
@@ -1503,17 +1502,17 @@ inside `Else`
 <span class="go">4</span>
 </pre></div>
 </div>
-<p>I/O ports can be named in the same way as <a class="reference internal" href="#lang-signalname"><span class="std std-ref">signals</span></a>:</p>
+<p>Core I/O ports can be named in the same way as <a class="reference internal" href="#lang-signalname"><span class="std std-ref">signals</span></a>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">clk_port</span> <span class="o">=</span> <span class="n">IOPort</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;clk&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">clk_port</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;clk&#39;</span>
 </pre></div>
 </div>
-<p>If two I/O ports with the same name exist in a design, one of them will be renamed to remove the ambiguity. Because the name of an I/O port is significant, they should be named unambiguously.</p>
+<p>If two core I/O ports with the same name exist in a design, one of them will be renamed to remove the ambiguity. Because the name of a core I/O port is significant, they should be named unambiguously.</p>
 </section>
 <section id="i-o-operators">
 <span id="lang-ioops"></span><h3>I/O operators<a class="headerlink" href="#i-o-operators" title="Permalink to this heading"></a></h3>
-<p>I/O values support only a limited set of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#typesseq" title="(in Python v3.12)"><span class="xref std std-ref">sequence</span></a> operators, all of which return another I/O value. The following table lists the I/O operators provided by Amaranth:</p>
+<p>Core I/O values support only a limited set of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#typesseq" title="(in Python v3.12)"><span class="xref std std-ref">sequence</span></a> operators, all of which return another core I/O value. The following table lists the operators provided by Amaranth for core I/O values:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
@@ -1524,11 +1523,11 @@ inside `Else`
 <tbody>
 <tr class="row-even"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></p></td>
 <td><p>length; width</p></td>
-<td><p><a class="footnote-reference brackets" href="#iops1" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#iops1" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">:</span><span class="n">k</span><span class="p">]</span></code></p></td>
 <td><p>slicing by constant subscripts</p></td>
-<td><p><a class="footnote-reference brackets" href="#iops2" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#iops2" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="nb">iter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></p></td>
 <td><p>iteration</p></td>
@@ -1536,25 +1535,25 @@ inside `Else`
 </tr>
 <tr class="row-odd"><td><p><code class="code highlight py python docutils literal highlight-python"><span class="n">Cat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code></p></td>
 <td><p>concatenation</p></td>
-<td><p><a class="footnote-reference brackets" href="#iops3" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#iops4" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a></p></td>
+<td><p><a class="footnote-reference brackets" href="#iops3" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#iops4" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a></p></td>
 </tr>
 </tbody>
 </table>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="iops1" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">9</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="iops1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">10</a><span class="fn-bracket">]</span></span>
 <p>Words “length” and “width” have the same meaning when talking about Amaranth I/O values. Conventionally, “width” is used.</p>
 </aside>
-<aside class="footnote brackets" id="iops2" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">10</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="iops2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">11</a><span class="fn-bracket">]</span></span>
 <p>All variations of the Python slice notation are supported, including “extended slicing”. E.g. all of <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code>, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span></code> select wires in the same way as other Python sequence types select their elements.</p>
 </aside>
-<aside class="footnote brackets" id="iops3" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">11</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="iops3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">12</a><span class="fn-bracket">]</span></span>
 <p>In the concatenated value, <code class="code highlight py python docutils literal highlight-python"><span class="n">a</span></code> occupies the lower indices and <code class="code highlight py python docutils literal highlight-python"><span class="n">b</span></code> the higher indices. Any number of arguments (zero, one, two, or more) are supported.</p>
 </aside>
-<aside class="footnote brackets" id="iops4" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">12</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="iops4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">13</a><span class="fn-bracket">]</span></span>
 <p>Concatenation of zero arguments, <code class="code highlight py python docutils literal highlight-python"><span class="n">Cat</span><span class="p">()</span></code>, returns a 0-bit regular value, however any such value is accepted (and ignored) anywhere an I/O value is expected.</p>
 </aside>
 </aside>
@@ -1574,9 +1573,9 @@ inside `Else`
 <ul class="simple">
 <li><p>An attribute is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">a_ANAME</span><span class="o">=</span><span class="n">attr</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;ANAME&quot;</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">attr</span></code> must be an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or a <code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
 <li><p>A parameter is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">p_PNAME</span><span class="o">=</span><span class="n">param</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;PNAME&quot;</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">param</span></code> must be an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, or a <code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code>.</p></li>
-<li><p>An input is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">i_INAME</span><span class="o">=</span><span class="n">in_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;INAME&quot;</span><span class="p">,</span> <span class="n">in_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">in_val</span></code> must be an <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">I/O value</span></a> or a <a class="reference internal" href="#lang-valuelike"><span class="std std-ref">value-like</span></a> object.</p></li>
-<li><p>An output is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">o_ONAME</span><span class="o">=</span><span class="n">out_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;ONAME&quot;</span><span class="p">,</span> <span class="n">out_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">out_val</span></code> must be an <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">I/O value</span></a> or a <a class="reference internal" href="#lang-valuelike"><span class="std std-ref">value-like</span></a> object that casts to a <a class="reference internal" href="#lang-signals"><span class="std std-ref">signal</span></a>, a concatenation of signals, or a slice of a signal.</p></li>
-<li><p>An inout is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">io_IONAME</span><span class="o">=</span><span class="n">inout_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;io&quot;</span><span class="p">,</span> <span class="s2">&quot;IONAME&quot;</span><span class="p">,</span> <span class="n">inout_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">inout_val</span></code> must be an <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">I/O value</span></a>.</p></li>
+<li><p>An input is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">i_INAME</span><span class="o">=</span><span class="n">in_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;INAME&quot;</span><span class="p">,</span> <span class="n">in_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">in_val</span></code> must be a <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">core I/O value</span></a> or a <a class="reference internal" href="#lang-valuelike"><span class="std std-ref">value-like</span></a> object.</p></li>
+<li><p>An output is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">o_ONAME</span><span class="o">=</span><span class="n">out_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="s2">&quot;ONAME&quot;</span><span class="p">,</span> <span class="n">out_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">out_val</span></code> must be a <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">core I/O value</span></a> or a <a class="reference internal" href="#lang-valuelike"><span class="std std-ref">value-like</span></a> object that casts to a <a class="reference internal" href="#lang-signals"><span class="std std-ref">signal</span></a>, a concatenation of signals, or a slice of a signal.</p></li>
+<li><p>An inout is specified using the <code class="code highlight py python docutils literal highlight-python"><span class="n">io_IONAME</span><span class="o">=</span><span class="n">inout_val</span></code> or <code class="code highlight py python docutils literal highlight-python"><span class="p">(</span><span class="s2">&quot;io&quot;</span><span class="p">,</span> <span class="s2">&quot;IONAME&quot;</span><span class="p">,</span> <span class="n">inout_val</span><span class="p">)</span></code> syntaxes. The <code class="code highlight py python docutils literal highlight-python"><span class="n">inout_val</span></code> must be a <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">core I/O value</span></a>.</p></li>
 </ul>
 <p>The two following examples use both syntaxes to add the same instance of type <code class="docutils literal notranslate"><span class="pre">external</span></code> as a submodule named <code class="docutils literal notranslate"><span class="pre">processor</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">submodules</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;external&quot;</span><span class="p">,</span>
@@ -1637,37 +1636,41 @@ inside `Else`
 </section>
 <section id="i-o-buffer-instances">
 <span id="lang-iobufferinstance"></span><h2>I/O buffer instances<a class="headerlink" href="#i-o-buffer-instances" title="Permalink to this heading"></a></h2>
-<p>An <em>I/O buffer instance</em> is a submodule that allows assigning <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">I/O values</span></a> to or from regular <a class="reference internal" href="#lang-values"><span class="std std-ref">values</span></a> without the use of an external, toolchain- and technology-dependent <a class="reference internal" href="#lang-instance"><span class="std std-ref">instance</span></a>. It can be created in four configurations: input, output, tristatable output, and bidirectional (input/output).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I/O buffer instances are a low-level primitive which is documented to ensure that the standard library does not rely on private interfaces in the core language. Most designers should use the <a class="reference internal" href="stdlib/io.html#module-amaranth.lib.io" title="amaranth.lib.io"><code class="xref py py-mod docutils literal notranslate"><span class="pre">amaranth.lib.io</span></code></a> module instead.</p>
+</div>
+<p>An <em>I/O buffer instance</em> is a submodule that allows connecting <a class="reference internal" href="#lang-iovalues"><span class="std std-ref">core I/O values</span></a> and regular <a class="reference internal" href="#lang-values"><span class="std std-ref">values</span></a> without the use of an external, toolchain- and technology-dependent <a class="reference internal" href="#lang-instance"><span class="std std-ref">instance</span></a>. It can be created in four configurations: input, output, tristatable output, and bidirectional (input/output).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">amaranth.hdl</span> <span class="kn">import</span> <span class="n">IOBufferInstance</span>
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>In the input configuration, the buffer combinatorially drives a signal <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> by the port:</p>
+<p>In the input configuration, the buffer instance combinationally drives a signal <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> by the port:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">port</span> <span class="o">=</span> <span class="n">IOPort</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_i</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">submodules</span><span class="o">.</span><span class="n">ibuf</span> <span class="o">=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">port_i</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">submodules</span> <span class="o">+=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">port_i</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In the output configuration, the buffer combinatorially drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code>:</p>
+<p>In the output configuration, the buffer instance combinationally drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">port</span> <span class="o">=</span> <span class="n">IOPort</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_o</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">submodules</span><span class="o">.</span><span class="n">obuf</span> <span class="o">=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">submodules</span> <span class="o">+=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In the tristatable output configuration, the buffer combinatorially drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code> if <code class="code highlight py python docutils literal highlight-python"><span class="n">oe</span></code> is asserted, and does not drive (leaves in a high-impedance state, or tristates) the port otherwise:</p>
+<p>In the tristatable output configuration, the buffer instance combinationally drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code> if <code class="code highlight py python docutils literal highlight-python"><span class="n">oe</span></code> is asserted, and does not drive (leaves in a high-impedance state, or tristates) the port otherwise:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">port</span> <span class="o">=</span> <span class="n">IOPort</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_o</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_oe</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">submodules</span><span class="o">.</span><span class="n">obuft</span> <span class="o">=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">,</span> <span class="n">oe</span><span class="o">=</span><span class="n">port_oe</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">submodules</span> <span class="o">+=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">,</span> <span class="n">oe</span><span class="o">=</span><span class="n">port_oe</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In the bidirectional (input/output) configuration, the buffer combiatorially drives a signal <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> by the port, combinatorially drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code> if <code class="code highlight py python docutils literal highlight-python"><span class="n">oe</span></code> is asserted, and does not drive (leaves in a high-impedance state, or tristates) the port otherwise:</p>
+<p>In the bidirectional (input/output) configuration, the buffer instance combinationally drives a signal <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> by the port, combinationally drives the port by a value <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code> if <code class="code highlight py python docutils literal highlight-python"><span class="n">oe</span></code> is asserted, and does not drive (leaves in a high-impedance state, or tristates) the port otherwise:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">port</span> <span class="o">=</span> <span class="n">IOPort</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_i</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_o</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">port_oe</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
-<span class="n">m</span><span class="o">.</span><span class="n">submodules</span><span class="o">.</span><span class="n">iobuf</span> <span class="o">=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">port_i</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">,</span> <span class="n">oe</span><span class="o">=</span><span class="n">port_oe</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">submodules</span> <span class="o">+=</span> <span class="n">IOBufferInstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">port_i</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">port_o</span><span class="p">,</span> <span class="n">oe</span><span class="o">=</span><span class="n">port_oe</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The width of the <code class="code highlight py python docutils literal highlight-python"><span class="n">i</span></code> and <code class="code highlight py python docutils literal highlight-python"><span class="n">o</span></code> values (when present) must be the same as the width of the port, and the width of the <code class="code highlight py python docutils literal highlight-python"><span class="n">oe</span></code> value must be 1.</p>
