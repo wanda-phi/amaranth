@@ -906,7 +906,7 @@ created by the view. Any other annotations are kept as-is.</p>
 <p>The <code class="code highlight py python docutils literal highlight-python"><span class="n">IEEE754Single</span></code> class itself can be used where a <a class="reference internal" href="../guide.html#lang-shapes"><span class="std std-ref">shape</span></a> is expected:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">IEEE754Single</span><span class="o">.</span><span class="n">as_shape</span><span class="p">()</span>
 <span class="go">StructLayout({&#39;fraction&#39;: 23, &#39;exponent&#39;: 8, &#39;sign&#39;: 1})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">IEEE754Single</span><span class="p">)</span><span class="o">.</span><span class="n">as_value</span><span class="p">()</span><span class="o">.</span><span class="n">width</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">IEEE754Single</span><span class="p">)</span><span class="o">.</span><span class="n">as_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span><span class="o">.</span><span class="n">width</span>
 <span class="go">32</span>
 </pre></div>
 </div>
