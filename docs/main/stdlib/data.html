@@ -4,11 +4,11 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data structures &mdash; Amaranth language &amp; toolchain 0.5.0.dev188 documentation</title>
+  <title>Data structures &mdash; Amaranth language &amp; toolchain 0.6.0.dev35 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/platformpicker.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=87fc4a05" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d131d90a" />
 
   
   <!--[if lt IE 9]>
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=e348780b"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=dbcca1a1"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/platformpicker.js"></script>
@@ -41,7 +41,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev188+g6b803379
+                0.6.0.dev35
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -70,13 +70,16 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="wiring.html">Interfaces and connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta.html">Interface metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stream.html">Data streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory.html">Memory arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html">Input/output buffers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cdc.html">Clock domain crossing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding.html">Code conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fifo.html">First-in first-out queues</a></li>
 <li class="toctree-l3"><a class="reference internal" href="crc.html">Cyclic redundancy checks</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator.html">Simulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../platform.html">Platform integration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changes.html">Changelog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../contrib.html">Contributing</a></li>
@@ -135,7 +138,7 @@
 <h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading"></a></h3>
 <p>The fundamental Amaranth type is a <code class="xref py py-class docutils literal notranslate"><span class="pre">Value</span></code>: a sequence of bits that can also be used as a number. Manipulating values directly is sufficient for simple applications, but in more complex ones, values are often more than just a sequence of bits; they have well-defined internal structure.</p>
 <p>For example, consider a module that processes pixels, converting them from RGB to grayscale. The color pixel format is RGB565:</p>
-<img alt="../_images/rgb565_layout.svg" src="../_images/rgb565_layout.svg" /><p>This module could be implemented (using a fast but <em>very</em> approximate method) as follows:</p>
+<img src="_images/data/rgb565_layout.svg" class="wavedrom wavedrom-reg" alt="{'reg': [{'name': '.red', 'bits': 5, 'type': 2}, {'name': '.green', 'bits': 6, 'type': 3}, {'name': '.blue', 'bits': 5, 'type': 4}], 'config': {'lanes': 1, 'compact': True, 'vflip': True, 'hspace': 650}}"><p>This module could be implemented (using a fast but <em>very</em> approximate method) as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i_color</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">o_gray</span>  <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 
@@ -182,7 +185,7 @@
                   <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i_stream</span><span class="o">.</span><span class="n">valid</span><span class="p">))))</span>
 </pre></div>
 </div>
-<p>Note how the width of <code class="docutils literal notranslate"><span class="pre">i_stream</span></code> is never defined explicitly; it is instead inferred from the shapes of its fields.</p>
+<p>Note how the width of <code class="code highlight py python docutils literal highlight-python"><span class="n">i_stream</span></code> is never defined explicitly; it is instead inferred from the shapes of its fields.</p>
 <p>In the previous section, the precise bitwise layout was important, since RGB565 is an interchange format. In this section however the exact bit positions do not matter, since the layout is only used internally to communicate between two modules in the same design. It is sufficient that both of them use the same layout.</p>
 </section>
 <section id="defining-layouts">
@@ -217,7 +220,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">red</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">green</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">blue</span><span class="p">)[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span>
 </pre></div>
 </div>
-<p>Here, the <code class="docutils literal notranslate"><span class="pre">RGBLayout</span></code> class itself is <a class="reference internal" href="../guide.html#lang-shapelike"><span class="std std-ref">shape-like</span></a> and can be used anywhere a shape is accepted. When a <code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code> is constructed with this layout, the returned value is wrapped in an <code class="docutils literal notranslate"><span class="pre">RGBView</span></code>:</p>
+<p>Here, the <code class="code highlight py python docutils literal highlight-python"><span class="n">RGBLayout</span></code> class itself is <a class="reference internal" href="../guide.html#lang-shapelike"><span class="std std-ref">shape-like</span></a> and can be used anywhere a shape is accepted. When a <code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code> is constructed with this layout, the returned value is wrapped in an <code class="code highlight py python docutils literal highlight-python"><span class="n">RGBView</span></code>:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pixel</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">RGBLayout</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">pixel</span><span class="o">.</span><span class="n">as_value</span><span class="p">())</span>
 <span class="go">16</span>
@@ -257,7 +260,7 @@
     <span class="p">})</span>
 </pre></div>
 </div>
-<p>Here, the shape of the <code class="docutils literal notranslate"><span class="pre">Command</span></code> is inferred, being large enough to accommodate the biggest of all defined parameter structures, and it is not necessary to manage it manually.</p>
+<p>Here, the shape of the <code class="code highlight py python docutils literal highlight-python"><span class="n">Command</span></code> is inferred, being large enough to accommodate the biggest of all defined parameter structures, and it is not necessary to manage it manually.</p>
 <p>One module could submit a command with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cmd</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">Command</span><span class="p">)</span>
 
@@ -480,7 +483,7 @@ in which they appear in <code class="code highlight py python docutils literal h
 <p>The fields of a structure layout follow one another without any gaps, and the size of
 a structure layout is the sum of the sizes of its members.</p>
 <p>For example, the following layout of a 16-bit value:</p>
-<img alt="../_images/struct_layout.svg" src="../_images/struct_layout.svg" /><p>can be described with:</p>
+<img src="_images/data/struct_layout.svg" class="wavedrom wavedrom-reg" alt="{'reg': [{'name': '.first', 'bits': 3}, {'name': '.second', 'bits': 7}, {'name': '.third', 'bits': 6}], 'config': {'lanes': 1, 'compact': True, 'vflip': True, 'hspace': 650}}"><p>can be described with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">StructLayout</span><span class="p">({</span>
     <span class="s2">&quot;first&quot;</span><span class="p">:</span>  <span class="mi">3</span><span class="p">,</span>
     <span class="s2">&quot;second&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
@@ -523,7 +526,7 @@ no fields.</p>
 <p>The fields of a union layout all start from bit 0, and the size of a union layout is the size
 of the largest of its members.</p>
 <p>For example, the following layout of a 7-bit value:</p>
-<img alt="../_images/union_layout.svg" src="../_images/union_layout.svg" /><p>can be described with:</p>
+<img src="_images/data/union_layout.svg" class="wavedrom wavedrom-reg" alt="{'reg': [{'name': '.third', 'bits': 6}, {'name': '', 'bits': 1, 'type': 1}, {'name': '.second', 'bits': 7}, {'name': '.first', 'bits': 3}, {'name': '', 'bits': 4, 'type': 1}], 'config': {'lanes': 3, 'compact': True, 'vflip': True, 'hspace': 289.4375}}"><p>can be described with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">UnionLayout</span><span class="p">({</span>
     <span class="s2">&quot;first&quot;</span><span class="p">:</span>  <span class="mi">3</span><span class="p">,</span>
     <span class="s2">&quot;second&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
@@ -551,23 +554,6 @@ no fields.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="amaranth.lib.data.UnionLayout.const">
-<span class="sig-name descname"><span class="pre">const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.data.UnionLayout.const" title="Permalink to this definition"></a></dt>
-<dd><p>Convert a constant initializer to a constant.</p>
-<p>Converts <code class="code highlight py python docutils literal highlight-python"><span class="n">init</span></code>, which may be a sequence or a mapping of field values, to a constant.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A constant that has the same value as a view with this layout that was initialized with
-an all-zero value and had every field assigned to the corresponding value in the order
-in which they appear in <code class="code highlight py python docutils literal highlight-python"><span class="n">init</span></code>.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -577,13 +563,18 @@ in which they appear in <code class="code highlight py python docutils literal h
 <p>The fields of an array layout follow one another without any gaps, and the size of an array
 layout is the size of its element multiplied by its length.</p>
 <p>For example, the following layout of a 16-bit value:</p>
-<img alt="../_images/array_layout.svg" src="../_images/array_layout.svg" /><p>can be described with:</p>
+<img src="_images/data/array_layout.svg" class="wavedrom wavedrom-reg" alt="{'reg': [{'name': '[0]', 'bits': 4}, {'name': '[1]', 'bits': 4}, {'name': '[2]', 'bits': 4}, {'name': '[3]', 'bits': 4}], 'config': {'lanes': 1, 'compact': True, 'vflip': True, 'hspace': 650}}"><p>can be described with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">ArrayLayout</span><span class="p">(</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Arrays that have padding can be described with a <a class="reference internal" href="#amaranth.lib.data.FlexibleLayout" title="amaranth.lib.data.FlexibleLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexibleLayout</span></code></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class, <a class="reference internal" href="#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">amaranth.lib.data.ArrayLayout</span></code></a>, is distinct from and serves a different
+function than <code class="xref py py-class docutils literal notranslate"><span class="pre">amaranth.hdl.Array</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes<span class="colon">:</span></dt>
@@ -619,7 +610,7 @@ defined contiguously, the fields in a flexible layout can overlap and have gaps 
 may also be more convenient to use a flexible layout when the layout information is derived
 from an external data file rather than defined in Python code.</p>
 <p>For example, the following layout of a 16-bit value:</p>
-<img alt="../_images/flexible_layout.svg" src="../_images/flexible_layout.svg" /><p>can be described with:</p>
+<img src="_images/data/flexible_layout.svg" class="wavedrom wavedrom-reg" alt="{'reg': [{'name': '', 'bits': 14, 'type': 1}, {'name': '[0]', 'bits': 1}, {'name': '', 'bits': 1, 'type': 1}, {'name': '', 'bits': 10, 'type': 1}, {'name': '.third', 'bits': 6}, {'name': '.second', 'bits': 7}, {'name': '', 'bits': 9, 'type': 1}, {'name': '', 'bits': 1, 'type': 1}, {'name': '.first', 'bits': 3}, {'name': '', 'bits': 12, 'type': 1}], 'config': {'lanes': 4, 'compact': True, 'vflip': True, 'hspace': 650}}"><p>can be described with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">FlexibleLayout</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="p">{</span>
     <span class="s2">&quot;first&quot;</span><span class="p">:</span>  <span class="n">data</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
     <span class="s2">&quot;second&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">unsigned</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="mi">0</span><span class="p">),</span>
@@ -787,8 +778,8 @@ a specific bit pattern and operations on it return constants.</p>
 <p>Slicing a constant or accessing its attributes returns a part of the underlying value
 corresponding to the field with that index or name. If the shape of the field is
 a <a class="reference internal" href="#amaranth.lib.data.Layout" title="amaranth.lib.data.Layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code></a>, the returned value is a <a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a>; if it is a different
-<a class="reference internal" href="../guide.html#lang-shapelike"><span class="std std-ref">shape-like</span></a> object implementing <a class="reference internal" href="../reference.html#amaranth.hdl.ShapeCastable.from_bits" title="amaranth.hdl.ShapeCastable.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a>,
-it will be the result of calling that method; otherwise, it is an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
+<a class="reference internal" href="../guide.html#lang-shapelike"><span class="std std-ref">shape-like</span></a> object, it will be the result of calling
+<a class="reference internal" href="../reference.html#amaranth.hdl.ShapeCastable.from_bits" title="amaranth.hdl.ShapeCastable.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a>; otherwise, it is an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
 <p>Slicing a constant whose layout is an <a class="reference internal" href="#amaranth.lib.data.ArrayLayout" title="amaranth.lib.data.ArrayLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayLayout</span></code></a> can be done with an index that is
 an Amaranth value rather than a constant integer. The returned element is chosen dynamically
 in that case, and the resulting value will be a <a class="reference internal" href="#amaranth.lib.data.View" title="amaranth.lib.data.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a> instead of a <a class="reference internal" href="#amaranth.lib.data.Const" title="amaranth.lib.data.Const"><code class="xref py py-class docutils literal notranslate"><span class="pre">Const</span></code></a>.</p>
@@ -844,8 +835,8 @@ its underlying bit pattern using <a class="reference internal" href="#amaranth.l
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#amaranth.lib.data.Const.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><p>Slice the underlying value.</p>
 <p>A field corresponding to <code class="code highlight py python docutils literal highlight-python"><span class="n">key</span></code> is looked up in the layout. If the field’s shape is
-a shape-castable object that has a <a class="reference internal" href="../reference.html#amaranth.hdl.ShapeCastable.from_bits" title="amaranth.hdl.ShapeCastable.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a> method, returns
-the result of calling that method. Otherwise, returns an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
+a shape-castable object, returns the result of calling <a class="reference internal" href="../reference.html#amaranth.hdl.ShapeCastable.from_bits" title="amaranth.hdl.ShapeCastable.from_bits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_bits()</span></code></a>.
+Otherwise, returns an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference internal" href="../reference.html#amaranth.hdl.ValueCastable" title="amaranth.hdl.ValueCastable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueCastable</span></code></a>) – Name or index of a field.</p>
@@ -915,7 +906,7 @@ created by the view. Any other annotations are kept as-is.</p>
 <p>The <code class="code highlight py python docutils literal highlight-python"><span class="n">IEEE754Single</span></code> class itself can be used where a <a class="reference internal" href="../guide.html#lang-shapes"><span class="std std-ref">shape</span></a> is expected:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">IEEE754Single</span><span class="o">.</span><span class="n">as_shape</span><span class="p">()</span>
 <span class="go">StructLayout({&#39;fraction&#39;: 23, &#39;exponent&#39;: 8, &#39;sign&#39;: 1})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">IEEE754Single</span><span class="p">)</span><span class="o">.</span><span class="n">as_value</span><span class="p">()</span><span class="o">.</span><span class="n">width</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Signal</span><span class="p">(</span><span class="n">IEEE754Single</span><span class="p">)</span><span class="o">.</span><span class="n">as_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span><span class="o">.</span><span class="n">width</span>
 <span class="go">32</span>
 </pre></div>
 </div>

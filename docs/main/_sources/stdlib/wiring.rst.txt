@@ -277,7 +277,7 @@ Going back to the stream example, the producer and the consumer now communicate 
 
     wiring.connect(m, producer.source, consumer.sink)
 
-This function examines the signatures of the two provided interface objects, ensuring that they are exactly complementary, and then adds combinatorial :py:`.eq()` statements to the module for each of the port pairs to form the connection. Aside from the *connectability* check, the single line above is equivalent to:
+This function examines the signatures of the two provided interface objects, ensuring that they are exactly complementary, and then adds combinational :py:`.eq()` statements to the module for each of the port pairs to form the connection. Aside from the *connectability* check, the single line above is equivalent to:
 
 .. testcode::
 
@@ -599,4 +599,19 @@ Making connections
 Components
 ==========
 
+.. _JSON Schema: https://json-schema.org
+
 .. autoclass:: Component
+
+
+Component metadata
+==================
+
+.. autoexception:: InvalidMetadata
+
+.. autoclass:: ComponentMetadata
+   :no-members:
+   :members: validate, origin, as_json
+
+   .. autoattribute:: schema
+      :annotation: = { "$id": "https://amaranth-lang.org/schema/amaranth/0.5/component.json", ... }
